@@ -1,0 +1,4 @@
+client-react/node_modules
+node_modules
+testing/*
+client-react/package-lock.json
