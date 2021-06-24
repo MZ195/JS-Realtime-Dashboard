@@ -8,6 +8,7 @@ import { Container } from "react-bootstrap";
 import Tweets from "./Views/Tweets";
 import NavBar from "./Views/NavBar";
 import Summary from "./Views/Summary";
+import BTPrice from "./Views/BTPrice";
 
 function App() {
   return (
@@ -26,6 +27,13 @@ function App() {
             <div className="col">
               <div className="statistics2">
                 <Tweets />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="statistics2">
+                <BTPrice />
               </div>
             </div>
           </div>

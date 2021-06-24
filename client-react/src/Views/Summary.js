@@ -18,7 +18,7 @@ class Summary extends Component {
         .then((data) => {
           this.setState({ data: data });
         });
-    }, 6000);
+    }, 30000);
   }
 
   render() {

@@ -1,14 +1,7 @@
 from flask import Blueprint, jsonify
-from nltk.sentiment import SentimentIntensityAnalyzer
 import psycopg2
-from json import dumps
-from kafka import KafkaProducer
-
-sia = SentimentIntensityAnalyzer()
 
 sentimentData = Blueprint('sentimentData', __name__)
-producer = KafkaProducer(bootstrap_servers=[
-                         '127.0.0.1:9092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
 
 conn = psycopg2.connect(database="postgres", user="postgres",
                         password="Aa@123456", host="127.0.0.1", port="5432")
@@ -24,7 +17,7 @@ def index():
     rows = cur.fetchall()
     for row in rows:
         row_item = {}
-        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1]
+        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1][:8]
         row_item["count"] = row[0]
         res.append(row_item)
     conn.commit()
@@ -44,7 +37,7 @@ def index2():
     rows = cur.fetchall()
     for row in rows:
         row_item = {}
-        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1]
+        row_item["datetime"] = str(row[1]).split("+")[0][:8]
         row_item["count"] = row[0]
         res.append(row_item)
     conn.commit()
@@ -68,3 +61,40 @@ def index3():
     result.headers.add('Access-Control-Allow-Origin', '*')
 
     return result
+
+
+@sentimentData.route("/get_price/", methods=["GET"])
+def index4():
+    res = []
+    cur = conn.cursor()
+    cur.execute('''SELECT avg(price) , to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time 
+                    FROM BT_Price
+                    where created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= date_trunc('hour',  now())
+                    GROUP BY new_time 
+                    ORDER BY new_time''')
+    rows = cur.fetchall()
+    for row in rows:
+        row_item = {}
+        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1][:8]
+        row_item["price"] = row[0]
+        res.append(row_item)
+    conn.commit()
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+    # res = {}
+
+    # URL = "https://api.coindesk.com/v1/bpi/currentprice.json"
+    # r = requests.get(url=URL)
+
+    # current_time = datetime.datetime.now()
+    # res["datetime"] = str(current_time).split(" ")[1].split(".")[0][:8]
+
+    # data = r.json()
+    # res["price"] = data["bpi"]["USD"]["rate_float"]
+
+    # result = jsonify(res)
+    # result.headers.add('Access-Control-Allow-Origin', '*')
+
+    # return result

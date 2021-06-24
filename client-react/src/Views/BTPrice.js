@@ -1,34 +1,26 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
 
-class Tweets extends Component {
+class BTPrice extends Component {
   constructor() {
     super();
     this.state = {
-      PositiveTweetsData: [],
-      NegativeTweetsData: [],
+      myChartData: [],
     };
   }
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/pos/")
+      fetch("http://localhost:9000/get_price/")
         .then((res) => res.json())
         .then((data) => {
-          this.setState({ PositiveTweetsData: data });
-        });
-
-      fetch("http://localhost:9000/neg/")
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ NegativeTweetsData: data });
+          this.setState({ myChartData: data });
         });
     }, 30000);
   }
 
   render() {
-    const { PositiveTweetsData } = this.state;
-    const { NegativeTweetsData } = this.state;
+    const { myChartData } = this.state;
 
     // var canvas = document.getElementById("lineChart");
     // var ctx = canvas.getContext("2d");
@@ -41,34 +33,20 @@ class Tweets extends Component {
       labels: [],
       datasets: [
         {
-          label: "Positive Tweets",
+          label: "BT Price",
           data: [],
           pointBackgroundColor: [],
-          borderColor: "rgba(0, 186, 156, 0.9)",
-          fill: false,
-        },
-        {
-          label: "Negative Tweets",
-          data: [],
-          pointBackgroundColor: [],
-          borderColor: "rgba(230, 73, 84, 0.9)",
+          borderColor: "rgba(255, 193, 7, 0.9)",
           fill: false,
         },
       ],
     };
 
-    PositiveTweetsData.forEach((item) => {
+    myChartData.forEach((item) => {
       chartJSData.labels.push(item.datetime);
-      chartJSData.datasets[0].data.push(item.count);
+      chartJSData.datasets[0].data.push(item.price);
       chartJSData.datasets[0].pointBackgroundColor.push(
-        "rgba(0, 186, 156, 0.9)"
-      );
-    });
-
-    NegativeTweetsData.forEach((item) => {
-      chartJSData.datasets[1].data.push(item.count);
-      chartJSData.datasets[1].pointBackgroundColor.push(
-        "rgba(230, 73, 84, 0.9)"
+        "rgba(255, 193, 7, 0.9)"
       );
     });
 
@@ -83,7 +61,7 @@ class Tweets extends Component {
       responsive: true,
       title: {
         display: true,
-        text: "Tweets",
+        text: "Bitcoin Price",
       },
       tooltips: {
         mode: "label",
@@ -113,7 +91,7 @@ class Tweets extends Component {
             },
             scaleLabel: {
               display: true,
-              labelString: "Count",
+              labelString: "Price (USD)",
             },
           },
         ],
@@ -127,4 +105,4 @@ class Tweets extends Component {
   }
 }
 
-export default Tweets;
+export default BTPrice;

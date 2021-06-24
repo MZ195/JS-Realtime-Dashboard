@@ -24,6 +24,16 @@
   padding: 20px;
   text-decoration: none;
   font-size: medium;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navBarIcon {
+  padding: -5px;
+  margin-left: -5px;
+  margin-bottom: -5px;
 }
 
 .title {
