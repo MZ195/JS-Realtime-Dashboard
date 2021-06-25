@@ -120,8 +120,23 @@
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.034);
 }
 
+.daily_summary {
+  background-color: #ffffff;
+  border-radius: 30px;
+  max-height: 650px;
+  /* max-width: 200px; */
+  padding: 5px;
+  margin: 15px 0px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  transition: 0.3s;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.034);
+}
+
 .chartLine {
-  height: 600px;
+  height: 650px;
 }
 
 .statistics {
@@ -213,20 +228,26 @@ html {
   /* box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.034); */
 }
 
+td {
+  border: none;
+}
+
+.table-responsive {
+  border: 1px solid #ffffff;
+}
+
 table {
-  border-spacing: 1;
+  /* border-spacing: 1; */
   border-collapse: collapse;
   background: #ffffff;
+  /* border: 1px solid #ffffff; */
   /* border: 1px solid black; */
-  border-radius: 5px;
+  /* border-radius: 44px; */
   width: 100%;
-  height: 10%;
+  height: 20%;
   margin: 0 auto;
   position: relative;
 }
-/* table * {
-  position: relative;
-} */
 
 table td,
 table th {
@@ -248,7 +269,7 @@ table tbody tr:last-child {
 table td,
 table th {
   text-align: left;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.034);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.034); */
 }
 table td.l,
 table th.l {
@@ -287,7 +308,7 @@ body {
 }
 
 tbody tr:hover {
-  background-color: rgba(240, 240, 240, 0.5);
+  background-color: rgba(240, 240, 240, 0.75);
   /* cursor: pointer; */
 }
 
@@ -315,6 +336,7 @@ tbody tr:hover {
 @media screen and (max-width: 992px) {
   table {
     display: block;
+    border: none;
   }
   table > *,
   table tr,

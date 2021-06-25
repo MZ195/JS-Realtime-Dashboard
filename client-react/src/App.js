@@ -9,6 +9,8 @@ import Tweets from "./Views/Tweets";
 import NavBar from "./Views/NavBar";
 import Summary from "./Views/Summary";
 import BTPrice from "./Views/BTPrice";
+import DailyTweetsBar from "./Views/DailyTweetsBar";
+import DailySummary from "./Views/DailySummary";
 
 function App() {
   return (
@@ -24,9 +26,25 @@ function App() {
             </div>
           </div>
           <div className="row">
-            <div className="col">
+            <div className="col-8">
               <div className="statistics2">
                 <Tweets />
+              </div>
+            </div>
+            <div className="col-4">
+              <div className="row">
+                <div className="col">
+                  <div className="daily_summary">
+                    <DailySummary />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="statistics2">
+                    <DailyTweetsBar />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

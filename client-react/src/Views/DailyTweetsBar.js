@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
-class BTPrice extends Component {
+class DailyTweetsBar extends Component {
   constructor() {
     super();
     this.state = {
@@ -11,7 +11,7 @@ class BTPrice extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/get_price/")
+      fetch("http://localhost:9000/daily_tweets/")
         .then((res) => res.json())
         .then((data) => {
           this.setState({ myChartData: data });
@@ -26,35 +26,36 @@ class BTPrice extends Component {
       labels: [],
       datasets: [
         {
-          label: "BT Price",
+          label: "Positive Tweets",
           data: [],
-          pointBackgroundColor: [],
-          borderColor: "rgba(255, 193, 7, 0.9)",
-          fill: false,
+          backgroundColor: "rgba(0, 186, 156, 0.9)",
+        },
+        {
+          label: "Negative Tweets",
+          data: [],
+          backgroundColor: "rgba(230, 73, 84, 0.9)",
         },
       ],
     };
 
     myChartData.forEach((item) => {
       chartJSData.labels.push(item.datetime);
-      chartJSData.datasets[0].data.push(item.price);
-      chartJSData.datasets[0].pointBackgroundColor.push(
-        "rgba(255, 193, 7, 0.9)"
-      );
+      chartJSData.datasets[0].data.push(item.pos);
+      chartJSData.datasets[1].data.push(item.neg);
     });
 
     const legend = {
+      display: true,
+      position: "bottom",
       labels: {
-        usePointStyle: true,
+        fontColor: "#000",
       },
-      position: "right",
     };
     const options = {
-      maintainAspectRatio: false,
       responsive: true,
       title: {
         display: true,
-        text: "Bitcoin Price",
+        text: "Today's Tweets Analysis",
       },
       tooltips: {
         mode: "label",
@@ -84,18 +85,18 @@ class BTPrice extends Component {
             },
             scaleLabel: {
               display: true,
-              labelString: "Price (USD)",
+              labelString: "Count",
             },
           },
         ],
       },
     };
     return (
-      <div className="chartLine">
-        <Line data={chartJSData} options={options} legend={legend} />
+      <div>
+        <Bar data={chartJSData} options={options} legend={legend} />
       </div>
     );
   }
 }
 
-export default BTPrice;
+export default DailyTweetsBar;
