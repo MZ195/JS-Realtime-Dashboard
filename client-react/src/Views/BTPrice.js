@@ -5,7 +5,8 @@ class BTPrice extends Component {
   constructor() {
     super();
     this.state = {
-      myChartData: [],
+      BTC_Data: [],
+      BTC_Prediction_Data: [],
     };
   }
 
@@ -14,38 +15,71 @@ class BTPrice extends Component {
       fetch("http://localhost:9000/get_price/")
         .then((res) => res.json())
         .then((data) => {
-          this.setState({ myChartData: data });
+          this.setState({ BTC_Data: data });
         });
-    }, 30000);
+    }, 1700);
+
+    setInterval(async () => {
+      fetch("http://localhost:9000/predict/")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ BTC_Prediction_Data: data });
+        });
+    }, 1500);
   }
 
   render() {
-    const { myChartData } = this.state;
+    const { BTC_Data } = this.state;
+    const { BTC_Prediction_Data } = this.state;
 
     let chartJSData = {
       labels: [],
       datasets: [
         {
-          label: "BT Price",
+          label: "BTC Price",
           data: [],
+          fontColor: "#fff",
           pointBackgroundColor: [],
-          borderColor: "rgba(255, 193, 7, 0.9)",
-          fill: false,
+          borderColor: "rgba(31, 217, 154, 0.9)",
+          // fill: true,
+          backgroundColor: "rgba(31, 217, 154, 0.03)",
+        },
+        {
+          label: "BTC Price Prediction",
+          data: [],
+          fontColor: "#fff",
+          pointBackgroundColor: [],
+          borderColor: "rgba(139, 68, 246, 0.9)",
+          // fill: true,
+          backgroundColor: "rgba(139, 68, 246, 0.03)",
         },
       ],
     };
 
-    myChartData.forEach((item) => {
+    BTC_Data.forEach((item) => {
       chartJSData.labels.push(item.datetime);
       chartJSData.datasets[0].data.push(item.price);
       chartJSData.datasets[0].pointBackgroundColor.push(
-        "rgba(255, 193, 7, 0.9)"
+        "rgba(31, 217, 154, 0.9)"
       );
     });
+
+    BTC_Prediction_Data.forEach((item) => {
+      if (!chartJSData.labels.includes(item.datetime)) {
+        chartJSData.labels.push(item.datetime);
+      }
+      chartJSData.datasets[1].data.push(item.price);
+      chartJSData.datasets[1].pointBackgroundColor.push(
+        "rgba(139, 68, 246, 0.9)"
+      );
+    });
+
+    // var diff = A.filter((x) => !B.includes(x));
 
     const legend = {
       labels: {
         usePointStyle: true,
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
       position: "right",
     };
@@ -55,6 +89,7 @@ class BTPrice extends Component {
       title: {
         display: true,
         text: "Bitcoin Price",
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
       tooltips: {
         mode: "label",
@@ -69,10 +104,15 @@ class BTPrice extends Component {
             display: true,
             gridLines: {
               display: true,
+              color: "rgba(255, 255, 255, 0.034)",
+            },
+            ticks: {
+              fontColor: "rgba(255, 255, 255, 0.7)", // this here
             },
             scaleLabel: {
               display: true,
               labelString: "Time",
+              fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },
         ],
@@ -81,10 +121,15 @@ class BTPrice extends Component {
             display: true,
             gridLines: {
               display: true,
+              color: "rgba(255, 255, 255, 0.034)",
+            },
+            ticks: {
+              fontColor: "rgba(255, 255, 255, 0.7)", // this here
             },
             scaleLabel: {
               display: true,
               labelString: "Price (USD)",
+              fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },
         ],

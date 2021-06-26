@@ -33,11 +33,11 @@ select count(*) from BT_Price;
 select count(*) from tweets;
 
 
-SELECT avg(price) , to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) new_time FROM BT_Price GROUP BY new_time ORDER BY new_time
+SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) time_, avg(price) FROM BT_Price GROUP BY time_ ORDER BY time_
 
-COPY (SELECT avg(price) , to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) new_time FROM BT_Price GROUP BY new_time ORDER BY new_time) TO '/Users/mz195/BT_PriceDB.csv' DELIMITER ',' CSV HEADER;
+COPY (SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) time_, avg(price) Price_avg FROM BT_Price GROUP BY time_ ORDER BY time_) TO '/Users/mz195/BTC_price_db.csv' DELIMITER ',' CSV HEADER;
 
-COPY (SELECT sum(Negative) neg , sum(Positive) pos, to_timestamp(floor((extract('epoch' from Created_at AT TIME ZONE 'UTC') / 30 )) * 30)  new_time FROM tweets GROUP BY new_time ORDER BY new_time) TO '/Users/mz195/tweets_db.csv' DELIMITER ',' CSV HEADER;
+COPY (SELECT to_timestamp(floor((extract('epoch' from Created_at AT TIME ZONE 'UTC') / 30 )) * 30)  time_ sum(Negative) neg , sum(Positive) pos FROM tweets GROUP BY time_ ORDER BY time_) TO '/Users/mz195/tweets_db.csv' DELIMITER ',' CSV HEADER;
 	
 --select to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time from BT_Price;
 

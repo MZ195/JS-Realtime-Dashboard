@@ -44,14 +44,14 @@ class Tweets extends Component {
           label: "Positive Tweets",
           data: [],
           pointBackgroundColor: [],
-          borderColor: "rgba(0, 186, 156, 0.9)",
+          borderColor: "rgba(68, 168, 184, 0.9)",
           fill: false,
         },
         {
           label: "Negative Tweets",
           data: [],
           pointBackgroundColor: [],
-          borderColor: "rgba(230, 73, 84, 0.9)",
+          borderColor: "rgba(139, 68, 246, 0.9)",
           fill: false,
         },
       ],
@@ -61,20 +61,21 @@ class Tweets extends Component {
       chartJSData.labels.push(item.datetime);
       chartJSData.datasets[0].data.push(item.count);
       chartJSData.datasets[0].pointBackgroundColor.push(
-        "rgba(0, 186, 156, 0.9)"
+        "rgba(68, 168, 184, 0.9)"
       );
     });
 
     NegativeTweetsData.forEach((item) => {
       chartJSData.datasets[1].data.push(item.count);
       chartJSData.datasets[1].pointBackgroundColor.push(
-        "rgba(230, 73, 84, 0.9)"
+        "rgba(139, 68, 246, 0.9)"
       );
     });
 
     const legend = {
       labels: {
         usePointStyle: true,
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
       position: "right",
     };
@@ -84,6 +85,7 @@ class Tweets extends Component {
       title: {
         display: true,
         text: "Tweets",
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
       tooltips: {
         mode: "label",
@@ -98,10 +100,15 @@ class Tweets extends Component {
             display: true,
             gridLines: {
               display: true,
+              color: "rgba(255, 255, 255, 0.034)",
+            },
+            ticks: {
+              fontColor: "rgba(255, 255, 255, 0.7)", // this here
             },
             scaleLabel: {
               display: true,
               labelString: "Time",
+              fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },
         ],
@@ -110,10 +117,15 @@ class Tweets extends Component {
             display: true,
             gridLines: {
               display: true,
+              color: "rgba(255, 255, 255, 0.034)",
+            },
+            ticks: {
+              fontColor: "rgba(255, 255, 255, 0.7)", // this here
             },
             scaleLabel: {
               display: true,
               labelString: "Count",
+              fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },
         ],

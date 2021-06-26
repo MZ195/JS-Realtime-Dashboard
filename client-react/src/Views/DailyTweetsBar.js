@@ -28,12 +28,12 @@ class DailyTweetsBar extends Component {
         {
           label: "Positive Tweets",
           data: [],
-          backgroundColor: "rgba(0, 186, 156, 0.9)",
+          backgroundColor: "rgba(68, 168, 184, 0.9)",
         },
         {
           label: "Negative Tweets",
           data: [],
-          backgroundColor: "rgba(230, 73, 84, 0.9)",
+          backgroundColor: "rgba(139, 68, 246, 0.9)",
         },
       ],
     };
@@ -48,7 +48,7 @@ class DailyTweetsBar extends Component {
       display: true,
       position: "bottom",
       labels: {
-        fontColor: "#000",
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
     };
     const options = {
@@ -56,6 +56,7 @@ class DailyTweetsBar extends Component {
       title: {
         display: true,
         text: "Today's Tweets Analysis",
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
       tooltips: {
         mode: "label",
@@ -70,10 +71,15 @@ class DailyTweetsBar extends Component {
             display: true,
             gridLines: {
               display: true,
+              color: "rgba(255, 255, 255, 0.034)",
+            },
+            ticks: {
+              fontColor: "rgba(255, 255, 255, 0.7)", // this here
             },
             scaleLabel: {
               display: true,
               labelString: "Time",
+              fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },
         ],
@@ -82,10 +88,15 @@ class DailyTweetsBar extends Component {
             display: true,
             gridLines: {
               display: true,
+              color: "rgba(255, 255, 255, 0.034)",
+            },
+            ticks: {
+              fontColor: "rgba(255, 255, 255, 0.7)", // this here
             },
             scaleLabel: {
               display: true,
               labelString: "Count",
+              fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },
         ],

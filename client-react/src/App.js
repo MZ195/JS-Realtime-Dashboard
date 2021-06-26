@@ -11,6 +11,7 @@ import Summary from "./Views/Summary";
 import BTPrice from "./Views/BTPrice";
 import DailyTweetsBar from "./Views/DailyTweetsBar";
 import DailySummary from "./Views/DailySummary";
+// import DailyTweetsRadar from "./Views/DailyTweetsRadar";
 
 function App() {
   return (
@@ -22,6 +23,13 @@ function App() {
             <div className="col">
               <div className="overview">
                 <Summary />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="statistics2">
+                <BTPrice />
               </div>
             </div>
           </div>
@@ -45,13 +53,6 @@ function App() {
                     <DailyTweetsBar />
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="statistics2">
-                <BTPrice />
               </div>
             </div>
           </div>

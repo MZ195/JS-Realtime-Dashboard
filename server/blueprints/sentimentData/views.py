@@ -1,6 +1,13 @@
 from flask import Blueprint, jsonify
 import psycopg2
+import pandas as pd
+import warnings
 from datetime import datetime
+
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+
+warnings.filterwarnings("ignore")
 
 sentimentData = Blueprint('sentimentData', __name__)
 
@@ -9,7 +16,7 @@ conn = psycopg2.connect(database="postgres", user="postgres",
 
 
 @sentimentData.route("/pos/", methods=["GET"])
-def index():
+def get_positive_tweets():
     res = []
     cur = conn.cursor()
     cur.execute('''SELECT sum(Positive) , 
@@ -32,7 +39,7 @@ def index():
 
 
 @sentimentData.route("/neg/", methods=["GET"])
-def index2():
+def get_negative_tweets():
     res = []
     cur = conn.cursor()
     cur.execute('''SELECT sum(Negative) , 
@@ -55,7 +62,7 @@ def index2():
 
 
 @sentimentData.route("/pos_count/", methods=["GET"])
-def index3():
+def get_count_tweets():
     res = {}
     cur = conn.cursor()
     cur.execute(
@@ -70,30 +77,8 @@ def index3():
     return result
 
 
-@sentimentData.route("/get_price/", methods=["GET"])
-def index4():
-    res = []
-    cur = conn.cursor()
-    cur.execute('''SELECT avg(price) , to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time 
-                    FROM BT_Price
-                    where created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
-                    GROUP BY new_time 
-                    ORDER BY new_time''')
-    rows = cur.fetchall()
-    for row in rows:
-        row_item = {}
-        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1][:8]
-        row_item["price"] = row[0]
-        res.append(row_item)
-    conn.commit()
-    result = jsonify(res)
-    result.headers.add('Access-Control-Allow-Origin', '*')
-
-    return result
-
-
 @sentimentData.route("/daily_tweets/", methods=["GET"])
-def index5():
+def get_daily_tweets():
     res = []
     cur = conn.cursor()
     cur.execute('''SELECT sum(Negative), sum(Positive) , 
@@ -119,7 +104,7 @@ def index5():
 
 
 @sentimentData.route("/daily_summary/", methods=["GET"])
-def index6():
+def get_daily_summary():
     res = []
     cur = conn.cursor()
     cur.execute('''SELECT sum(Negative), sum(Positive) , 
@@ -164,6 +149,85 @@ def index6():
         row_item["pos"] = current_tweet_row[1]
         row_item["price"] = current_price_row[0]
         res.append(row_item)
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/get_price/", methods=["GET"])
+def get_btc_price():
+    res = []
+    cur = conn.cursor()
+    cur.execute('''SELECT avg(price) , to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time 
+                    FROM BT_Price
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '29 minute')
+                    GROUP BY new_time 
+                    ORDER BY new_time''')
+    rows = cur.fetchall()
+    for row in rows:
+        row_item = {}
+        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1][:8]
+        row_item["price"] = row[0]
+        res.append(row_item)
+    conn.commit()
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/predict/", methods=["GET"])
+def predict_btc_price():
+    res = []
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '29 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    rows = cur.fetchall()
+    for row in rows:
+        row_item = {}
+        row_item["datetime"] = str(row[0]).split("+")[0].split(" ")[1][:8]
+        row_item["price"] = row[1]
+        res.append(row_item)
+    conn.commit()
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/score/", methods=["GET"])
+def get_model_score():
+    res = {}
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    pred_rows = cur.fetchall()
+
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time, avg(price)  
+                    FROM BT_Price
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '29 minute')
+                    GROUP BY new_time 
+                    ORDER BY new_time''')
+    actual_rows = cur.fetchall()
+
+    conn.commit()
+
+    preds = []
+    actual = []
+
+    for i in range(len(actual_rows)):
+        preds.append(pred_rows[i][1])
+        actual.append(actual_rows[i][1])
+    rsme = sqrt(mean_squared_error(actual, preds))
+    res["RMSE"] = rsme
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')

@@ -8,6 +8,7 @@ class Summary extends Component {
     super();
     this.state = {
       data: {},
+      model_score: {},
     };
   }
 
@@ -18,19 +19,26 @@ class Summary extends Component {
         .then((data) => {
           this.setState({ data: data });
         });
-    }, 30000);
+
+      fetch("http://localhost:9000/score/")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ model_score: data });
+        });
+    }, 15000);
   }
 
   render() {
     const { data } = this.state;
+    const { model_score } = this.state;
 
     return (
       <div className="col-12">
-        <div className="card">
+        <div className="card border-0">
           <div className="card-content">
             <div className="card-body">
               <div className="row">
-                <div className="col-xl-4 col-lg-6 col-md-12 border-right border-grey border-right border-lighten-3 clearfix">
+                <div className="col-xl-4 col-lg-6 col-md-12 border-right clearfix">
                   <div className="float-left pl-2 block-content">
                     <span className="grey darken-1 block title">
                       Positive Tweets
@@ -41,7 +49,7 @@ class Summary extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-4 col-lg-6 col-md-12 border-right border-grey border-right border-lighten-3 clearfix">
+                <div className="col-xl-4 col-lg-6 col-md-12 border-right clearfix">
                   <div className="float-left pl-2 block-content">
                     <span className="title">Negative Tweets</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
@@ -52,9 +60,9 @@ class Summary extends Component {
                 </div>
                 <div className="col-xl-4 col-lg-6 col-md-12 clearfix">
                   <div className="float-left pl-2 block-content">
-                    <span className="title">Model Score</span>
+                    <span className="title">Model Score (RSME)</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
-                      {Number(data["savings_avg"]).toLocaleString()}
+                      {Number(model_score["RMSE"]).toLocaleString()}
                       <img src={savings} alt="" />
                     </div>
                   </div>

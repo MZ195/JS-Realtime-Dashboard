@@ -9,11 +9,13 @@ class DailySummary extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:9000/daily_summary/")
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ data: data });
-      });
+    setInterval(async () => {
+      fetch("http://localhost:9000/daily_summary/")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ data: data });
+        });
+    }, 30000);
   }
 
   render() {
@@ -43,7 +45,7 @@ class DailySummary extends Component {
         <div className="col">
           <div className="container-table100">
             <div className="table-responsive">
-              <table cellspacing="0" cellpadding="0">
+              <table>
                 <thead>
                   <tr className="table100-head">
                     <th className="column1">Time</th>
