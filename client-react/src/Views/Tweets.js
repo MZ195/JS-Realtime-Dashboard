@@ -107,7 +107,7 @@ class Tweets extends Component {
             },
             scaleLabel: {
               display: true,
-              labelString: "Time",
+              labelString: "Time (30 min Window)",
               fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },

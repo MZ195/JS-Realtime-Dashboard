@@ -10,7 +10,7 @@ import NavBar from "./Views/NavBar";
 import Summary from "./Views/Summary";
 import BTPrice from "./Views/BTPrice";
 import DailyTweetsBar from "./Views/DailyTweetsBar";
-import DailySummary from "./Views/DailySummary";
+import ScoresSummary from "./Views/ScoresSummary";
 // import DailyTweetsRadar from "./Views/DailyTweetsRadar";
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
               <div className="row">
                 <div className="col">
                   <div className="daily_summary">
-                    <DailySummary />
+                    <ScoresSummary />
                   </div>
                 </div>
               </div>

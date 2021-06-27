@@ -6,7 +6,9 @@ class BTPrice extends Component {
     super();
     this.state = {
       BTC_Data: [],
-      BTC_Prediction_Data: [],
+      BTC_Prediction_ARIMA: [],
+      BTC_Prediction_VARMAX: [],
+      BTC_Prediction_SES: [],
     };
   }
 
@@ -17,20 +19,32 @@ class BTPrice extends Component {
         .then((data) => {
           this.setState({ BTC_Data: data });
         });
-    }, 1700);
 
-    setInterval(async () => {
-      fetch("http://localhost:9000/predict/")
+      fetch("http://localhost:9000/predict_ARIMA/")
         .then((res) => res.json())
         .then((data) => {
-          this.setState({ BTC_Prediction_Data: data });
+          this.setState({ BTC_Prediction_ARIMA: data });
         });
-    }, 1500);
+
+      fetch("http://localhost:9000/predict_VARMAX/")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ BTC_Prediction_VARMAX: data });
+        });
+
+      fetch("http://localhost:9000/predict_SES/")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ BTC_Prediction_SES: data });
+        });
+    }, 15000);
   }
 
   render() {
     const { BTC_Data } = this.state;
-    const { BTC_Prediction_Data } = this.state;
+    const { BTC_Prediction_ARIMA } = this.state;
+    const { BTC_Prediction_VARMAX } = this.state;
+    const { BTC_Prediction_SES } = this.state;
 
     let chartJSData = {
       labels: [],
@@ -45,13 +59,31 @@ class BTPrice extends Component {
           backgroundColor: "rgba(31, 217, 154, 0.03)",
         },
         {
-          label: "BTC Price Prediction",
+          label: "BTC Price ARIMA",
           data: [],
           fontColor: "#fff",
           pointBackgroundColor: [],
           borderColor: "rgba(139, 68, 246, 0.9)",
           // fill: true,
           backgroundColor: "rgba(139, 68, 246, 0.03)",
+        },
+        {
+          label: "BTC Price VARMAX",
+          data: [],
+          fontColor: "#fff",
+          pointBackgroundColor: [],
+          borderColor: "rgba(255, 166, 0, 0.9)",
+          // fill: true,
+          backgroundColor: "rgba(255, 166, 0, 0.03)",
+        },
+        {
+          label: "BTC Price SES",
+          data: [],
+          fontColor: "#fff",
+          pointBackgroundColor: [],
+          borderColor: "rgba(33, 150, 243, 0.9)",
+          // fill: true,
+          backgroundColor: "rgba(33, 150, 243, 0.03)",
         },
       ],
     };
@@ -64,9 +96,20 @@ class BTPrice extends Component {
       );
     });
 
-    BTC_Prediction_Data.forEach((item) => {
+    BTC_Prediction_ARIMA.forEach((item) => {
       if (!chartJSData.labels.includes(item.datetime)) {
-        chartJSData.labels.push(item.datetime);
+        var currentHour = item.datetime.substring(0, 2);
+        var currentMinutes = item.datetime.substring(3, 5);
+        var currentSeconds = item.datetime.substring(6, 8);
+        var dateLimit = new Date(new Date() - 28 * 60000);
+        var v = new Date();
+        v.setMinutes(currentSeconds);
+        v.setSeconds(currentMinutes);
+        v.setHours(currentHour);
+
+        if (v.getTime() > dateLimit.getTime()) {
+          chartJSData.labels.push(item.datetime);
+        }
       }
       chartJSData.datasets[1].data.push(item.price);
       chartJSData.datasets[1].pointBackgroundColor.push(
@@ -74,7 +117,47 @@ class BTPrice extends Component {
       );
     });
 
-    // var diff = A.filter((x) => !B.includes(x));
+    BTC_Prediction_VARMAX.forEach((item) => {
+      if (!chartJSData.labels.includes(item.datetime)) {
+        var currentHour = item.datetime.substring(0, 2);
+        var currentMinutes = item.datetime.substring(3, 5);
+        var currentSeconds = item.datetime.substring(6, 8);
+        var dateLimit = new Date(new Date() - 28 * 60000);
+        var v = new Date();
+        v.setMinutes(currentSeconds);
+        v.setSeconds(currentMinutes);
+        v.setHours(currentHour);
+
+        if (v.getTime() > dateLimit.getTime()) {
+          chartJSData.labels.push(item.datetime);
+        }
+      }
+      chartJSData.datasets[2].data.push(item.price);
+      chartJSData.datasets[2].pointBackgroundColor.push(
+        "rgba(255, 166, 0, 0.9)"
+      );
+    });
+
+    BTC_Prediction_SES.forEach((item) => {
+      if (!chartJSData.labels.includes(item.datetime)) {
+        var currentHour = item.datetime.substring(0, 2);
+        var currentMinutes = item.datetime.substring(3, 5);
+        var currentSeconds = item.datetime.substring(6, 8);
+        var dateLimit = new Date(new Date() - 28 * 60000);
+        var v = new Date();
+        v.setMinutes(currentSeconds);
+        v.setSeconds(currentMinutes);
+        v.setHours(currentHour);
+
+        if (v.getTime() > dateLimit.getTime()) {
+          chartJSData.labels.push(item.datetime);
+        }
+      }
+      chartJSData.datasets[3].data.push(item.price);
+      chartJSData.datasets[3].pointBackgroundColor.push(
+        "rgba(33, 150, 243, 0.9)"
+      );
+    });
 
     const legend = {
       labels: {
@@ -111,7 +194,7 @@ class BTPrice extends Component {
             },
             scaleLabel: {
               display: true,
-              labelString: "Time",
+              labelString: "Time (30 min Window)",
               fontColor: "rgba(255, 255, 255, 0.7)",
             },
           },

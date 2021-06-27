@@ -19,12 +19,6 @@ class Summary extends Component {
         .then((data) => {
           this.setState({ data: data });
         });
-
-      fetch("http://localhost:9000/score/")
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ model_score: data });
-        });
     }, 15000);
   }
 

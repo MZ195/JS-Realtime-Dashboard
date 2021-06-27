@@ -219,9 +219,9 @@ html {
   background: transparent; /* Optional: just make scrollbar invisible */
 }
 /* Optional: show position indicator in red */
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background: #ff0000;
-}
+} */
 
 .container-table100 {
   display: -webkit-box;

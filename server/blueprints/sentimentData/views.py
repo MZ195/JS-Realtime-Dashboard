@@ -1,11 +1,10 @@
 from flask import Blueprint, jsonify
 import psycopg2
-import pandas as pd
+from statsmodels.tsa.statespace.varmax import VARMAX
 import warnings
 from datetime import datetime
 
-from sklearn.metrics import mean_squared_error
-from math import sqrt
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 
 warnings.filterwarnings("ignore")
 
@@ -178,8 +177,30 @@ def get_btc_price():
     return result
 
 
-@sentimentData.route("/predict/", methods=["GET"])
-def predict_btc_price():
+@sentimentData.route("/predict_VARMAX/", methods=["GET"])
+def predict_btc_price_varmax():
+    res = []
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction_VARMAX
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    rows = cur.fetchall()
+    for row in rows:
+        row_item = {}
+        row_item["datetime"] = str(row[0]).split("+")[0].split(" ")[1][:8]
+        row_item["price"] = row[1]
+        res.append(row_item)
+    conn.commit()
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/predict_ARIMA/", methods=["GET"])
+def predict_btc_price_arima():
     res = []
     cur = conn.cursor()
     cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
@@ -200,8 +221,66 @@ def predict_btc_price():
     return result
 
 
-@sentimentData.route("/score/", methods=["GET"])
-def get_model_score():
+@sentimentData.route("/predict_SES/", methods=["GET"])
+def predict_btc_price_ses():
+    res = []
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction_SES
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '29 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    rows = cur.fetchall()
+    for row in rows:
+        row_item = {}
+        row_item["datetime"] = str(row[0]).split("+")[0].split(" ")[1][:8]
+        row_item["price"] = row[1]
+        res.append(row_item)
+    conn.commit()
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/score_VARMAX/", methods=["GET"])
+def get_model_score_varmax():
+    res = {}
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction_VARMAX
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    pred_rows = cur.fetchall()
+
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time, avg(price)  
+                    FROM BT_Price
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '29 minute')
+                    GROUP BY new_time 
+                    ORDER BY new_time''')
+    actual_rows = cur.fetchall()
+
+    conn.commit()
+
+    preds = []
+    actual = []
+
+    for i in range(len(actual_rows)):
+        preds.append(pred_rows[i][1])
+        actual.append(actual_rows[i][1])
+    res["RMSE"] = mean_squared_error(actual, preds, squared=False)
+    res["MAE"] = mean_absolute_error(actual, preds)
+    res["MSE"] = mean_squared_error(actual, preds)
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/score_ARIMA/", methods=["GET"])
+def get_model_score_arima():
     res = {}
     cur = conn.cursor()
     cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
@@ -226,8 +305,47 @@ def get_model_score():
     for i in range(len(actual_rows)):
         preds.append(pred_rows[i][1])
         actual.append(actual_rows[i][1])
-    rsme = sqrt(mean_squared_error(actual, preds))
-    res["RMSE"] = rsme
+
+    res["RMSE"] = mean_squared_error(actual, preds, squared=False)
+    res["MAE"] = mean_absolute_error(actual, preds)
+    res["MSE"] = mean_squared_error(actual, preds)
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@sentimentData.route("/score_SES/", methods=["GET"])
+def get_model_score_ses():
+    res = {}
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    pred_rows = cur.fetchall()
+
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time, avg(price)  
+                    FROM BTC_Price_Prediction_SES
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '29 minute')
+                    GROUP BY new_time 
+                    ORDER BY new_time''')
+    actual_rows = cur.fetchall()
+
+    conn.commit()
+
+    preds = []
+    actual = []
+
+    for i in range(len(actual_rows)):
+        preds.append(pred_rows[i][1])
+        actual.append(actual_rows[i][1])
+
+    res["RMSE"] = mean_squared_error(actual, preds, squared=False)
+    res["MAE"] = mean_absolute_error(actual, preds)
+    res["MSE"] = mean_squared_error(actual, preds)
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')
