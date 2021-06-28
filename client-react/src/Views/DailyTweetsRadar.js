@@ -11,7 +11,7 @@ class DailyTweetsRadar extends Component {
 
   componentDidMount() {
     // setInterval(async () => {
-    fetch("http://localhost:9000/daily_tweets/")
+    fetch("http://localhost:9000/tweets/daily")
       .then((res) => res.json())
       .then((data) => {
         this.setState({ myChartData: data });

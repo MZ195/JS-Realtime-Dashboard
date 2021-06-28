@@ -1,12 +1,14 @@
 from flask import Flask
 
 # blueprint import
-from blueprints.sentimentData.views import sentimentData
+from blueprints.tweets.tweets import tweetsData
+from blueprints.btc.btc import btcData
 
 
 def create_app(app):
     # register blueprint
-    app.register_blueprint(sentimentData)
+    app.register_blueprint(tweetsData)
+    app.register_blueprint(btcData)
 
     return app
 

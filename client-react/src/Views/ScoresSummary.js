@@ -12,19 +12,19 @@ class ScoresSummary extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/score_ARIMA/")
+      fetch("http://localhost:9000/score/ARIMA")
         .then((res) => res.json())
         .then((data) => {
           this.setState({ arima_score: data });
         });
 
-      fetch("http://localhost:9000/score_VARMAX/")
+      fetch("http://localhost:9000/score/VARMAX")
         .then((res) => res.json())
         .then((data) => {
           this.setState({ varmax_score: data });
         });
 
-      fetch("http://localhost:9000/score_SES/")
+      fetch("http://localhost:9000/score/SES")
         .then((res) => res.json())
         .then((data) => {
           this.setState({ ses_score: data });

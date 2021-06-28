@@ -14,7 +14,7 @@ class Summary extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/pos_count/")
+      fetch("http://localhost:9000/tweets/count")
         .then((res) => res.json())
         .then((data) => {
           this.setState({ data: data });

@@ -1,16 +1,3 @@
-
-SELECT now() - interval '30 minute'
-
-select date_trunc('day',  now() + interval '1 day')
-
-SELECT date_trunc('hour',  now() + interval '1 hour')
-
-SELECT created_at AT TIME ZONE 'UTC'
-FROM tweets 
-ORDER BY created_at DESC
-LIMIT 10
--- WHERE Created_at >= date_trunc('hour',  now() - interval '3 hour')
-
 SELECT avg(price) , extract(hour from created_at) new_time 
 FROM BT_Price
 where created_at <= date_trunc('day',  now() + interval '1 day') and created_at >= date_trunc('day',  now())
@@ -24,30 +11,56 @@ WHERE created_at <= date_trunc('day',  now() + interval '1 day') AT TIME ZONE 'U
 GROUP BY new_time 
 ORDER BY new_time
 
-select * from tweets LIMIT 10;
+-- SELECT COUNT(*) FROM tweets;
 
-select * from BT_Price;
+-- SELECT COUNT(*) FROM BT_Price;
 
-select count(*) from BT_Price;
+-- SELECT COUNT(*) FROM BTC_Price_Prediction;
 
-select count(*) from tweets;
+-- SELECT COUNT(*) FROM BTC_Price_Prediction_VARMAX;
 
+-- SELECT COUNT(*) FROM BTC_Price_Prediction_SES;
 
-SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) time_, avg(price) FROM BT_Price GROUP BY time_ ORDER BY time_
+-- SELECT * FROM BTC_Price_Prediction ORDER BY created_at DESC LIMIT 10;
 
-COPY (SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) time_, avg(price) Price_avg FROM BT_Price GROUP BY time_ ORDER BY time_) TO '/Users/mz195/BTC_price_db.csv' DELIMITER ',' CSV HEADER;
+-- SELECT * FROM BTC_Price_Prediction_SES ORDER BY created_at DESC LIMIT 10;
 
-COPY (SELECT to_timestamp(floor((extract('epoch' from Created_at AT TIME ZONE 'UTC') / 30 )) * 30)  time_ sum(Negative) neg , sum(Positive) pos FROM tweets GROUP BY time_ ORDER BY time_) TO '/Users/mz195/tweets_db.csv' DELIMITER ',' CSV HEADER;
-	
---select to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time from BT_Price;
+-- SELECT * FROM BTC_Price_Prediction_VARMAX ORDER BY created_at DESC LIMIT 10;
 
--- SELECT avg(price) , to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) new_time 
--- FROM BT_Price
--- where created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= date_trunc('hour',  now())
--- GROUP BY new_time 
--- ORDER BY new_time;
+-- SELECT * FROM BTC_Price_Prediction ORDER BY created_at DESC LIMIT 10;
 
---CREATE TABLE BT_Price(
-  -- ID_ SERIAL,
-   --created_at TIMESTAMP,
-  -- price float);
+COPY 
+	(
+		SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_, avg(price) ARIMA FROM 
+		BTC_Price_Prediction 
+		GROUP BY time_ 
+		ORDER BY time_
+	) 
+TO '/Users/mz195/arima_predictions.csv' DELIMITER ',' CSV HEADER;
+
+COPY 
+	(
+		SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_, avg(price) VARMAX FROM 
+		BTC_Price_Prediction_VARMAX 
+		GROUP BY time_ 
+		ORDER BY time_
+	) 
+TO '/Users/mz195/varmax_predictions.csv' DELIMITER ',' CSV HEADER;
+
+COPY 
+	(
+		SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_, avg(price) SES FROM 
+		BTC_Price_Prediction_SES 
+		GROUP BY time_ 
+		ORDER BY time_
+	) 
+TO '/Users/mz195/ses_predictions.csv' DELIMITER ',' CSV HEADER;
+
+COPY 
+	(
+		SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_, avg(price) Price_avg FROM 
+		BT_Price 
+		GROUP BY time_ 
+		ORDER BY time_
+	) 
+TO '/Users/mz195/BTC_price_db.csv' DELIMITER ',' CSV HEADER;

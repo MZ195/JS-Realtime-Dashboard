@@ -14,30 +14,38 @@ class BTPrice extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/get_price/")
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ BTC_Data: data });
-        });
+      var v = new Date();
+      if (
+        v.getSeconds() === 32 ||
+        v.getSeconds() === 2 ||
+        v.getSeconds() === 10 ||
+        v.getSeconds() === 40
+      ) {
+        fetch("http://localhost:9000/btc/price")
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ BTC_Data: data });
+          });
 
-      fetch("http://localhost:9000/predict_ARIMA/")
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ BTC_Prediction_ARIMA: data });
-        });
+        fetch("http://localhost:9000/predict/ARIMA")
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ BTC_Prediction_ARIMA: data });
+          });
 
-      fetch("http://localhost:9000/predict_VARMAX/")
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ BTC_Prediction_VARMAX: data });
-        });
+        fetch("http://localhost:9000/predict/VARMAX")
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ BTC_Prediction_VARMAX: data });
+          });
 
-      fetch("http://localhost:9000/predict_SES/")
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ BTC_Prediction_SES: data });
-        });
-    }, 15000);
+        fetch("http://localhost:9000/predict/SES")
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ BTC_Prediction_SES: data });
+          });
+      }
+    }, 60);
   }
 
   render() {
@@ -103,8 +111,8 @@ class BTPrice extends Component {
         var currentSeconds = item.datetime.substring(6, 8);
         var dateLimit = new Date(new Date() - 28 * 60000);
         var v = new Date();
-        v.setMinutes(currentSeconds);
-        v.setSeconds(currentMinutes);
+        v.setMinutes(currentMinutes);
+        v.setSeconds(currentSeconds);
         v.setHours(currentHour);
 
         if (v.getTime() > dateLimit.getTime()) {
@@ -118,20 +126,6 @@ class BTPrice extends Component {
     });
 
     BTC_Prediction_VARMAX.forEach((item) => {
-      if (!chartJSData.labels.includes(item.datetime)) {
-        var currentHour = item.datetime.substring(0, 2);
-        var currentMinutes = item.datetime.substring(3, 5);
-        var currentSeconds = item.datetime.substring(6, 8);
-        var dateLimit = new Date(new Date() - 28 * 60000);
-        var v = new Date();
-        v.setMinutes(currentSeconds);
-        v.setSeconds(currentMinutes);
-        v.setHours(currentHour);
-
-        if (v.getTime() > dateLimit.getTime()) {
-          chartJSData.labels.push(item.datetime);
-        }
-      }
       chartJSData.datasets[2].data.push(item.price);
       chartJSData.datasets[2].pointBackgroundColor.push(
         "rgba(255, 166, 0, 0.9)"
@@ -139,20 +133,6 @@ class BTPrice extends Component {
     });
 
     BTC_Prediction_SES.forEach((item) => {
-      if (!chartJSData.labels.includes(item.datetime)) {
-        var currentHour = item.datetime.substring(0, 2);
-        var currentMinutes = item.datetime.substring(3, 5);
-        var currentSeconds = item.datetime.substring(6, 8);
-        var dateLimit = new Date(new Date() - 28 * 60000);
-        var v = new Date();
-        v.setMinutes(currentSeconds);
-        v.setSeconds(currentMinutes);
-        v.setHours(currentHour);
-
-        if (v.getTime() > dateLimit.getTime()) {
-          chartJSData.labels.push(item.datetime);
-        }
-      }
       chartJSData.datasets[3].data.push(item.price);
       chartJSData.datasets[3].pointBackgroundColor.push(
         "rgba(33, 150, 243, 0.9)"
