@@ -2,13 +2,13 @@
 
 ## INTRODUCTION
 The purpose of this project is to build a real-time predictive analysis dashboard for bitcoi prices.<br/>
-The project was the capstone project for [`SDA`](https://sda.edu.sa/)'s Data Science Bootcamp in cooporation with [`CodingDojo`](https://www.codingdojo.com/).
+The project was the capstone project for [SDA](https://sda.edu.sa/)'s Data Science Bootcamp in cooporation with [CodingDojo](https://www.codingdojo.com/).
 
 The team members:
-- [`Mamdouh Alomari`](https://github.com/MamdouhAlomari)
-- [`Rawan Alsaedi`](https://github.com/RawanAlsaedi)
-- [`Ruba Yousuf`](https://github.com/RubaYousuf)
-- [`Tahani Albarakati`](https://github.com/Tahani-Albarakati)
+- [Mamdouh Alomari](https://github.com/MamdouhAlomari)
+- [Rawan Alsaedi](https://github.com/RawanAlsaedi)
+- [Ruba Yousuf](https://github.com/RubaYousuf)
+- [Tahani Albarakati](https://github.com/Tahani-Albarakati)
 
 ## PROJECT DESCRIPTION
 In this project we utilized different technologies to come up with a real-time dashboard for bitcoin prices.<br/>
