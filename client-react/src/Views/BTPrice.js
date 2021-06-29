@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
+import { BigNumber } from "bignumber.js";
 
 class BTPrice extends Component {
   constructor() {
@@ -9,6 +10,7 @@ class BTPrice extends Component {
       BTC_Prediction_ARIMA: [],
       BTC_Prediction_VARMAX: [],
       BTC_Prediction_SES: [],
+      BTC_Prediction_overall: [],
     };
   }
 
@@ -16,10 +18,10 @@ class BTPrice extends Component {
     setInterval(async () => {
       var v = new Date();
       if (
-        v.getSeconds() === 32 ||
-        v.getSeconds() === 2 ||
-        v.getSeconds() === 10 ||
-        v.getSeconds() === 40
+        v.getSeconds() === 33 ||
+        v.getSeconds() === 3 ||
+        v.getSeconds() === 13 ||
+        v.getSeconds() === 43
       ) {
         fetch("http://localhost:9000/btc/price")
           .then((res) => res.json())
@@ -44,6 +46,12 @@ class BTPrice extends Component {
           .then((data) => {
             this.setState({ BTC_Prediction_SES: data });
           });
+
+        fetch("http://localhost:9000/predict/overall")
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ BTC_Prediction_overall: data });
+          });
       }
     }, 60);
   }
@@ -53,6 +61,7 @@ class BTPrice extends Component {
     const { BTC_Prediction_ARIMA } = this.state;
     const { BTC_Prediction_VARMAX } = this.state;
     const { BTC_Prediction_SES } = this.state;
+    const { BTC_Prediction_overall } = this.state;
 
     let chartJSData = {
       labels: [],
@@ -69,6 +78,7 @@ class BTPrice extends Component {
         {
           label: "BTC Price ARIMA",
           data: [],
+          hidden: true,
           fontColor: "#fff",
           pointBackgroundColor: [],
           borderColor: "rgba(139, 68, 246, 0.9)",
@@ -78,6 +88,7 @@ class BTPrice extends Component {
         {
           label: "BTC Price VARMAX",
           data: [],
+          hidden: true,
           fontColor: "#fff",
           pointBackgroundColor: [],
           borderColor: "rgba(255, 166, 0, 0.9)",
@@ -87,11 +98,21 @@ class BTPrice extends Component {
         {
           label: "BTC Price SES",
           data: [],
+          hidden: true,
           fontColor: "#fff",
           pointBackgroundColor: [],
           borderColor: "rgba(33, 150, 243, 0.9)",
           // fill: true,
           backgroundColor: "rgba(33, 150, 243, 0.03)",
+        },
+        {
+          label: "BTC Price Overall",
+          data: [],
+          fontColor: "#fff",
+          pointBackgroundColor: [],
+          borderColor: "rgba(255, 98, 88, 0.9)",
+          // fill: true,
+          backgroundColor: "rgba(255, 98, 88, 0.03)",
         },
       ],
     };
@@ -115,7 +136,12 @@ class BTPrice extends Component {
         v.setSeconds(currentSeconds);
         v.setHours(currentHour);
 
-        if (v.getTime() > dateLimit.getTime()) {
+        let limit_num = BigNumber(dateLimit.getTime());
+        let item_num = BigNumber(v.getTime());
+
+        let diff = Number(limit_num.minus(item_num));
+
+        if (diff < 0) {
           chartJSData.labels.push(item.datetime);
         }
       }
@@ -136,6 +162,13 @@ class BTPrice extends Component {
       chartJSData.datasets[3].data.push(item.price);
       chartJSData.datasets[3].pointBackgroundColor.push(
         "rgba(33, 150, 243, 0.9)"
+      );
+    });
+
+    BTC_Prediction_overall.forEach((item) => {
+      chartJSData.datasets[4].data.push(item.price);
+      chartJSData.datasets[4].pointBackgroundColor.push(
+        "rgba(255, 98, 88, 0.9)"
       );
     });
 

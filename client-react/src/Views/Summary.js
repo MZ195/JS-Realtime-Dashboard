@@ -14,10 +14,16 @@ class Summary extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/tweets/count")
+      fetch("http://127.0.0.1:9000/tweets/count")
         .then((res) => res.json())
         .then((data) => {
           this.setState({ data: data });
+        });
+
+      fetch("http://127.0.0.1:9000/score/overall")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ model_score: data });
         });
     }, 15000);
   }
@@ -54,10 +60,12 @@ class Summary extends Component {
                 </div>
                 <div className="col-xl-4 col-lg-6 col-md-12 clearfix">
                   <div className="float-left pl-2 block-content">
-                    <span className="title">Model Score (RSME)</span>
+                    <span className="title">Model Score (R Squared)</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
-                      {Number(model_score["RMSE"]).toLocaleString()}
-                      <img src={savings} alt="" />
+                      <p>
+                        <img src={savings} alt="" />
+                        {(Number(model_score["R2"]) * 100).toLocaleString()} %
+                      </p>
                     </div>
                   </div>
                 </div>
