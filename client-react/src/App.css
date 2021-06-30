@@ -12,7 +12,7 @@
   margin-bottom: 0px;
   position: sticky;
   z-index: 9;
-  border: #ffffff;
+  /* border: #ffffff; */
   /* display: inline-block; */
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.34);
 }
@@ -117,14 +117,14 @@
 }
 
 .radar-chart {
-  height: 382;
-  width: 459;
+  height: 400px;
+  width: 300px;
   padding: 0px;
   margin: 0px;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  /* position: relative; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* flex-wrap: wrap; */
   transition: 0.3s;
 }
 
@@ -144,7 +144,11 @@
 }
 
 .chartLine {
-  height: 600px;
+  height: 550px;
+}
+
+.chartBar {
+  height: 400px;
 }
 
 .statistics {
@@ -218,10 +222,6 @@ html {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
 }
-/* Optional: show position indicator in red */
-/* ::-webkit-scrollbar-thumb {
-  background: #ff0000;
-} */
 
 .container-table100 {
   display: -webkit-box;
@@ -240,7 +240,7 @@ html {
 
 .table-responsive {
   max-height: 250px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   /* border: 1px solid rgba(0, 0, 0, 0.034); */
   /* box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.034); */
 }
@@ -326,7 +326,7 @@ body {
 
 tbody tr:hover {
   background-color: rgb(37, 39, 60);
-  border-radius: 25px;
+  /* border-radius: 25px; */
   /* cursor: pointer; */
 }
 

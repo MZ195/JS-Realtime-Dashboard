@@ -52,6 +52,7 @@ class DailyTweetsBar extends Component {
       },
     };
     const options = {
+      maintainAspectRatio: false,
       responsive: true,
       title: {
         display: true,
@@ -103,7 +104,7 @@ class DailyTweetsBar extends Component {
       },
     };
     return (
-      <div>
+      <div className="chartBar">
         <Bar data={chartJSData} options={options} legend={legend} />
       </div>
     );

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from numpy import minimum
 import psycopg2
 import warnings
 import pandas as pd
@@ -11,6 +12,55 @@ btcData = Blueprint('btc', __name__)
 
 conn = psycopg2.connect(database="postgres", user="postgres",
                         password="Aa@123456", host="127.0.0.1", port="5432")
+
+
+@btcData.route("/btc/profit", methods=["GET"])
+def get_btc_profit():
+    res = {}
+    cur = conn.cursor()
+    cur.execute(
+        '''SELECT created_at, recommendation, price FROM Recommendations;''')
+    rows = cur.fetchall()
+    conn.commit()
+
+    if rows[0][1] == "SELL":
+        rows = rows[1:]
+
+    if rows[len(rows) - 1] == "BUY":
+        rows = rows[:-1]
+
+    df = pd.DataFrame(rows, columns=['time', 'recommendation', 'price'])
+    df["pct"] = 0
+    df["runing_amount"] = 0
+
+    # Investment
+    amount = 100000
+    transactions_num = len(df)
+    transactions_fees = 0.5  # maybe we need to use if statements here
+    total_fees = transactions_num * transactions_fees
+
+    for i in range(len(df)):
+        if df["recommendation"].iloc[i] == "SELL":
+            df["pct"].iloc[i] = (df["price"].iloc[i] -
+                                 df["price"].iloc[i-1])/df["price"].iloc[i-1]
+            if i <= 1:
+                df["runing_amount"].iloc[i] = (1+df["pct"].iloc[i])*amount
+            else:
+                df["runing_amount"].iloc[i] = (
+                    1+df["pct"].iloc[i])*df["runing_amount"].iloc[i-2]
+
+    rtn_pct = (df["runing_amount"].iloc[-1]) / amount * 100
+
+    # dollar profit/loss
+    profit_loss = df["runing_amount"].iloc[-1] - amount
+
+    res["rtn_pct"] = rtn_pct
+    res["profit_loss"] = profit_loss
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
 
 
 @btcData.route("/btc/price", methods=["GET"])
@@ -147,16 +197,19 @@ def get_model_score_arima():
 
     conn.commit()
 
-    preds = []
-    actual = []
+    actual_df = pd.DataFrame(actual_rows, columns=['time', 'price'])
+    preds_df = pd.DataFrame(pred_rows, columns=['time', 'preds'])
 
-    for i in range(len(actual_rows)):
-        preds.append(pred_rows[i][1])
-        actual.append(actual_rows[i][1])
+    actual_values = [x for x in actual_df["price"]]
+    preds_values = [x for x in preds_df["preds"]]
 
-    res["RMSE"] = mean_squared_error(actual, preds, squared=False)
-    res["MAE"] = mean_absolute_error(actual, preds)
-    res["MSE"] = mean_squared_error(actual, preds)
+    preds_values = preds_values[:len(actual_values) - 1]
+    actual_values = actual_values[:len(preds_values)]
+
+    res["RMSE"] = mean_squared_error(
+        actual_values, preds_values, squared=False)
+    res["MAE"] = mean_absolute_error(actual_values, preds_values)
+    res["MSE"] = mean_squared_error(actual_values, preds_values)
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')
@@ -224,16 +277,19 @@ def get_model_score_ses():
 
     conn.commit()
 
-    preds = []
-    actual = []
+    actual_df = pd.DataFrame(actual_rows, columns=['time', 'price'])
+    preds_df = pd.DataFrame(pred_rows, columns=['time', 'preds'])
 
-    for i in range(len(actual_rows)):
-        preds.append(pred_rows[i][1])
-        actual.append(actual_rows[i][1])
+    actual_values = [x for x in actual_df["price"]]
+    preds_values = [x for x in preds_df["preds"]]
 
-    res["RMSE"] = mean_squared_error(actual, preds, squared=False)
-    res["MAE"] = mean_absolute_error(actual, preds)
-    res["MSE"] = mean_squared_error(actual, preds)
+    preds_values = preds_values[:len(actual_values) - 1]
+    actual_values = actual_values[:len(preds_values)]
+
+    res["RMSE"] = mean_squared_error(
+        actual_values, preds_values, squared=False)
+    res["MAE"] = mean_absolute_error(actual_values, preds_values)
+    res["MSE"] = mean_squared_error(actual_values, preds_values)
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')
@@ -265,8 +321,10 @@ def get_model_score_overall():
     actual_values = [x for x in actual_df["price"]]
     preds_values = [x for x in preds_df["preds"]]
 
-    preds_values = preds_values[:len(actual_values) - 1]
-    actual_values = actual_values[:len(preds_values)]
+    min = minimum(len(actual_values), len(preds_values))
+
+    preds_values = preds_values[:min-1]
+    actual_values = actual_values[:min-1]
 
     r2 = r2_score(actual_values, preds_values)
 

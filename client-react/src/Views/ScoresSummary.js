@@ -29,7 +29,7 @@ class ScoresSummary extends Component {
         .then((data) => {
           this.setState({ ses_score: data });
         });
-    }, 15000);
+    }, 30000);
   }
 
   render() {

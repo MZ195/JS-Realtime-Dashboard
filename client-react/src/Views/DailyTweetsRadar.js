@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Radar } from "react-chartjs-2";
+import { Polar } from "react-chartjs-2";
 
 class DailyTweetsRadar extends Component {
   constructor() {
@@ -10,64 +10,47 @@ class DailyTweetsRadar extends Component {
   }
 
   componentDidMount() {
-    // setInterval(async () => {
-    fetch("http://localhost:9000/tweets/daily")
-      .then((res) => res.json())
-      .then((data) => {
-        this.setState({ myChartData: data });
-      });
-    // }, 30000);
+    setInterval(async () => {
+      fetch("http://127.0.0.1:9000/tweets/count")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ myChartData: data });
+        });
+    }, 30000);
   }
 
   render() {
     const { myChartData } = this.state;
 
     let chartJSData = {
-      labels: [],
+      labels: ["Positive", "Negative"],
       datasets: [
         {
-          label: "Positive Tweets",
-          data: [],
+          label: "Today's Tweets",
+          data: [myChartData["Total_pos"], myChartData["Total_neg"]],
           fill: true,
-          backgroundColor: "rgba(0, 186, 156, 0.5)",
-          // borderColor: "rgb(0, 186, 156)",
-          // pointBackgroundColor: "rgb(0, 186, 156)",
-          // pointBorderColor: "#000",
-          // pointHoverBackgroundColor: "#000",
-          // pointHoverBorderColor: "rgb(0, 186, 156)",
-        },
-        {
-          label: "Negative Tweets",
-          data: [],
-          fill: true,
-          backgroundColor: "rgba(230, 73, 84, 0.5)",
-          // borderColor: "rgb(230, 73, 84)",
-          // pointBackgroundColor: "rgb(230, 73, 84)",
-          // pointBorderColor: "#000",
-          // pointHoverBackgroundColor: "#000",
-          // pointHoverBorderColor: "rgb(230, 73, 84)",
+          backgroundColor: [
+            "rgba(68, 168, 184, 0.9)",
+            "rgba(139, 68, 246, 0.9)",
+          ],
         },
       ],
     };
-
-    myChartData.forEach((item) => {
-      chartJSData.labels.push(item.datetime);
-      chartJSData.datasets[0].data.push(item.pos);
-      chartJSData.datasets[1].data.push(item.neg);
-    });
 
     const legend = {
       display: false,
       position: "top",
       labels: {
-        fontColor: "#000",
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
     };
     const options = {
+      maintainAspectRatio: false,
       responsive: true,
       title: {
         display: true,
         text: "Today's Tweets Analysis",
+        fontColor: "rgba(255, 255, 255, 0.7)",
       },
       tooltips: {
         mode: "label",
@@ -81,36 +64,10 @@ class DailyTweetsRadar extends Component {
           radius: 0,
         },
       },
-      // scales: {
-      //   xAxes: [
-      //     {
-      //       display: true,
-      //       gridLines: {
-      //         display: true,
-      //       },
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: "Time",
-      //       },
-      //     },
-      //   ],
-      //   yAxes: [
-      //     {
-      //       display: true,
-      //       gridLines: {
-      //         display: true,
-      //       },
-      //       scaleLabel: {
-      //         display: true,
-      //         labelString: "Count",
-      //       },
-      //     },
-      //   ],
-      // },
     };
     return (
-      <div className="my-auto mx-auto chartjs-render-monitor">
-        <Radar data={chartJSData} options={options} legend={legend} />
+      <div className="my-auto mx-auto radar-chart chartjs-render-monitor">
+        <Polar data={chartJSData} options={options} legend={legend} />
       </div>
     );
   }
