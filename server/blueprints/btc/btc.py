@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify
 from numpy import minimum
 import psycopg2
+from datetime import datetime
 import warnings
 import pandas as pd
 from sklearn.metrics import r2_score
@@ -14,19 +15,47 @@ conn = psycopg2.connect(database="postgres", user="postgres",
                         password="Aa@123456", host="127.0.0.1", port="5432")
 
 
-@btcData.route("/btc/profit", methods=["GET"])
-def get_btc_profit():
-    res = {}
+@btcData.route("/btc/profit/details", methods=["GET"])
+def get_btc_profit_details():
+    res = []
     cur = conn.cursor()
     cur.execute(
-        '''SELECT created_at, recommendation, price FROM Recommendations;''')
+        '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 6''')
     rows = cur.fetchall()
     conn.commit()
 
     if rows[0][1] == "SELL":
         rows = rows[1:]
 
-    if rows[len(rows) - 1] == "BUY":
+    if rows[len(rows) - 1][1] == "BUY":
+        rows = rows[:-1]
+
+    for i in range(len(rows)):
+        current_res = {}
+        current_res["datetime"] = str(rows[i][0]).split(" ")[1]
+        current_res["recommendation"] = str(rows[i][1])
+        current_res["price"] = str(rows[i][2])
+        res.append(current_res)
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@btcData.route("/btc/profit", methods=["GET"])
+def get_btc_profit():
+    res = {}
+    cur = conn.cursor()
+    cur.execute(
+        '''SELECT created_at, recommendation, price FROM Recommendations''')
+    rows = cur.fetchall()
+    conn.commit()
+
+    if rows[0][1] == "SELL":
+        rows = rows[1:]
+
+    if rows[len(rows) - 1][1] == "BUY":
         rows = rows[:-1]
 
     df = pd.DataFrame(rows, columns=['time', 'recommendation', 'price'])
@@ -34,7 +63,7 @@ def get_btc_profit():
     df["runing_amount"] = 0
 
     # Investment
-    amount = 100000
+    amount = 10000
     transactions_num = len(df)
     transactions_fees = 0.5  # maybe we need to use if statements here
     total_fees = transactions_num * transactions_fees
@@ -56,6 +85,7 @@ def get_btc_profit():
 
     res["rtn_pct"] = rtn_pct
     res["profit_loss"] = profit_loss
+    res["runing_amount"] = df["runing_amount"].iloc[-1]
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')
@@ -302,14 +332,14 @@ def get_model_score_overall():
     cur = conn.cursor()
     cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
                     FROM BT_Price
-                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '1 hour')
                     GROUP BY time_ 
                     ORDER BY time_''')
     actual_rows = cur.fetchall()
 
     cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
                     FROM BTC_Price_Prediction_Overall
-                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '1 hour')
                     GROUP BY time_ 
                     ORDER BY time_''')
     preds_rows = cur.fetchall()

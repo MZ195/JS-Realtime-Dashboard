@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import wallet from "../img/money-bag.svg";
-import exchange_green from "../img/exchange.svg";
-import exchange_red from "../img/exchange-red.svg";
-import returns from "../img/tax.svg";
+import accuracy from "../img/accuracy.svg";
+import dollar from "../img/return.svg";
 
-class Summary extends Component {
+class Summary2 extends Component {
   constructor() {
     super();
     this.state = {
@@ -20,10 +19,17 @@ class Summary extends Component {
         .then((data) => {
           this.setState({ profit: data });
         });
+
+      fetch("http://127.0.0.1:9000/score/overall")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ model_score: data });
+        });
     }, 15000);
   }
 
   render() {
+    const { model_score } = this.state;
     const { profit } = this.state;
 
     return (
@@ -45,36 +51,22 @@ class Summary extends Component {
                 </div>
                 <div className="col-xl-4 col-lg-6 col-md-12 border-right clearfix">
                   <div className="float-left pl-2 block-content">
-                    <span className="title">Return Percentage</span>
+                    <span className="title">Runing Amount</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
-                      {Number(profit["rtn_pct"]) !== 0
-                        ? (Number(profit["rtn_pct"]) - 100)
-                            .toFixed(2)
-                            .toLocaleString()
-                        : Number(profit["rtn_pct"])
-                            .toFixed(2)
-                            .toLocaleString()}{" "}
-                      %
-                      <img src={returns} alt="" />
+                      {Number(profit["runing_amount"]).toLocaleString()} $
+                      <img src={dollar} alt="" />
                     </div>
                   </div>
                 </div>
                 <div className="col-xl-4 col-lg-6 col-md-12 clearfix">
                   <div className="float-left pl-2 block-content">
-                    <span className="title">Profit/Loss</span>
+                    <span className="title">Model Score (R²)</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
-                      {Number(profit["profit_loss"])
-                        .toFixed(1)
+                      {(Number(model_score["R2"]) * 100)
+                        .toFixed(2)
                         .toLocaleString()}{" "}
-                      $
-                      <img
-                        src={
-                          Number(profit["profit_loss"]) > 0
-                            ? exchange_green
-                            : exchange_red
-                        }
-                        alt=""
-                      />
+                      %
+                      <img src={accuracy} alt="" />
                     </div>
                   </div>
                 </div>
@@ -87,4 +79,4 @@ class Summary extends Component {
   }
 }
 
-export default Summary;
+export default Summary2;

@@ -134,7 +134,7 @@
   max-height: 650px;
   /* max-width: 200px; */
   padding: 5px;
-  margin: 15px 0px;
+  margin: 15px 15px;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -335,9 +335,19 @@ tbody tr:hover {
   padding-left: 40px;
 }
 
+.column11 {
+  width: 260px;
+  padding-left: 40px;
+}
+
 .column2 {
   color: #00ba9c;
-  width: 160px;
+  width: 200px;
+}
+
+.column22 {
+  color: #00ba9c;
+  width: 360px;
 }
 
 .column3 {
@@ -348,7 +358,13 @@ tbody tr:hover {
 .column4 {
   color: #fdba49;
   width: 110px;
-  padding-right: 62px;
+  padding-right: 40px;
+}
+
+.column5 {
+  color: #fdba49;
+  width: 170px;
+  padding-right: 40px;
 }
 
 @media screen and (max-width: 992px) {

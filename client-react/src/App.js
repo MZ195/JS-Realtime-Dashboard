@@ -8,10 +8,11 @@ import { Container } from "react-bootstrap";
 import Tweets from "./Views/Tweets";
 import NavBar from "./Views/NavBar";
 import Summary from "./Views/Summary";
+import Summary2 from "./Views/Summary-2";
 import BTPrice from "./Views/BTPrice";
-import DailyTweetsBar from "./Views/DailyTweetsBar";
+// import DailyTweetsBar from "./Views/DailyTweetsBar";
 import ScoresSummary from "./Views/ScoresSummary";
-import DailyTweetsRadar from "./Views/DailyTweetsRadar";
+import Recommendations from "./Views/Recommendations";
 
 function App() {
   return (
@@ -28,32 +29,38 @@ function App() {
           </div>
           <div className="row">
             <div className="col">
+              <div className="overview">
+                <Summary2 />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
               <div className="statistics2">
                 <BTPrice />
               </div>
             </div>
           </div>
           <div className="row">
-            <div className="col">
-              <div className="statistics2">
-                <DailyTweetsRadar />
-              </div>
-            </div>
-            <div className="col-6">
-              <div className="statistics2">
-                <DailyTweetsBar />
-              </div>
-            </div>
-            <div className="col">
-              <div className="daily_summary">
-                <ScoresSummary />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
+            <div className="col-8">
               <div className="statistics2">
                 <Tweets />
+              </div>
+            </div>
+            <div className="col">
+              <div className="row">
+                <div className="daily_summary statistics2">
+                  <ScoresSummary />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="row">
+                    <div className="daily_summary statistics2">
+                      <Recommendations />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
