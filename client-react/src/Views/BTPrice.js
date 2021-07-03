@@ -11,6 +11,7 @@ class BTPrice extends Component {
       BTC_Prediction_VARMAX: [],
       BTC_Prediction_SES: [],
       BTC_Prediction_overall: [],
+      BTC_last_operation: {},
     };
   }
 
@@ -52,6 +53,12 @@ class BTPrice extends Component {
           .then((data) => {
             this.setState({ BTC_Prediction_overall: data });
           });
+
+        fetch("http://localhost:9000/btc/profit/details/lastOperation")
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ BTC_last_operation: data });
+          });
       }
     }, 60);
   }
@@ -62,6 +69,7 @@ class BTPrice extends Component {
     const { BTC_Prediction_VARMAX } = this.state;
     const { BTC_Prediction_SES } = this.state;
     const { BTC_Prediction_overall } = this.state;
+    const { BTC_last_operation } = this.state;
 
     let chartJSData = {
       labels: [],
@@ -71,9 +79,9 @@ class BTPrice extends Component {
           data: [],
           fontColor: "#fff",
           pointBackgroundColor: [],
-          borderColor: "rgba(31, 217, 154, 0.9)",
+          borderColor: "rgba(88, 216, 163, 0.9)",
           // fill: true,
-          backgroundColor: "rgba(31, 217, 154, 0.03)",
+          backgroundColor: "rgba(88, 216, 163, 0.03)",
         },
         {
           label: "BTC Price ARIMA",
@@ -91,9 +99,9 @@ class BTPrice extends Component {
           hidden: true,
           fontColor: "#fff",
           pointBackgroundColor: [],
-          borderColor: "rgba(255, 166, 0, 0.9)",
+          borderColor: "rgba(87, 199, 212, 0.9)",
           // fill: true,
-          backgroundColor: "rgba(255, 166, 0, 0.03)",
+          backgroundColor: "rgba(87, 199, 212, 0.03)",
         },
         {
           label: "BTC Price SES",
@@ -110,9 +118,18 @@ class BTPrice extends Component {
           data: [],
           fontColor: "#fff",
           pointBackgroundColor: [],
-          borderColor: "rgba(255, 98, 88, 0.9)",
+          borderColor: "rgba(233, 30, 99, 0.9)",
           // fill: true,
-          backgroundColor: "rgba(255, 98, 88, 0.03)",
+          backgroundColor: "rgba(233, 30, 99, 0.03)",
+        },
+        {
+          label: "Buying Price",
+          data: [],
+          hidden: true,
+          fontColor: "#fff",
+          pointBackgroundColor: [],
+          borderColor: "rgba(255, 175, 0, 0.9)",
+          fill: false,
         },
       ],
     };
@@ -121,7 +138,7 @@ class BTPrice extends Component {
       chartJSData.labels.push(item.datetime);
       chartJSData.datasets[0].data.push(item.price);
       chartJSData.datasets[0].pointBackgroundColor.push(
-        "rgba(31, 217, 154, 0.9)"
+        "rgba(88, 216, 163, 0.9)"
       );
     });
 
@@ -132,9 +149,17 @@ class BTPrice extends Component {
         var currentSeconds = item.datetime.substring(6, 8);
         var dateLimit = new Date(new Date() - 28 * 60000);
         var v = new Date();
-        v.setMinutes(currentMinutes);
-        v.setSeconds(currentSeconds);
-        v.setHours(currentHour);
+
+        if (currentHour === "23") {
+          v.setDate(v.getDate() - 1);
+          v.setMinutes(currentMinutes);
+          v.setSeconds(currentSeconds);
+          v.setHours(currentHour);
+        } else {
+          v.setMinutes(currentMinutes);
+          v.setSeconds(currentSeconds);
+          v.setHours(currentHour);
+        }
 
         let limit_num = BigNumber(dateLimit.getTime());
         let item_num = BigNumber(v.getTime());
@@ -145,6 +170,14 @@ class BTPrice extends Component {
           chartJSData.labels.push(item.datetime);
         }
       }
+
+      if (BTC_last_operation.price !== -1) {
+        chartJSData.datasets[5].data.push(BTC_last_operation.price);
+        chartJSData.datasets[5].pointBackgroundColor.push(
+          "rgba(255, 175, 0, 0.9)"
+        );
+      }
+
       chartJSData.datasets[1].data.push(item.price);
       chartJSData.datasets[1].pointBackgroundColor.push(
         "rgba(139, 68, 246, 0.9)"
@@ -154,7 +187,7 @@ class BTPrice extends Component {
     BTC_Prediction_VARMAX.forEach((item) => {
       chartJSData.datasets[2].data.push(item.price);
       chartJSData.datasets[2].pointBackgroundColor.push(
-        "rgba(255, 166, 0, 0.9)"
+        "rgba(87, 199, 212, 0.9)"
       );
     });
 
@@ -168,7 +201,7 @@ class BTPrice extends Component {
     BTC_Prediction_overall.forEach((item) => {
       chartJSData.datasets[4].data.push(item.price);
       chartJSData.datasets[4].pointBackgroundColor.push(
-        "rgba(255, 98, 88, 0.9)"
+        "rgba(233, 30, 99, 0.9)"
       );
     });
 
@@ -177,7 +210,7 @@ class BTPrice extends Component {
         usePointStyle: true,
         fontColor: "rgba(255, 255, 255, 0.7)",
       },
-      position: "right",
+      position: "bottom",
     };
     const options = {
       maintainAspectRatio: false,

@@ -22,20 +22,16 @@
   float: inline-start;
   display: block;
   color: #f2f2f2;
-  text-align: canter;
-  padding: 20px;
-  text-decoration: none;
+  /* padding: 20px; */
+  margin-top: 30px;
   font-size: medium;
-  position: relative;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
 }
 
 .navBarIcon {
-  padding: -5px;
-  margin-left: -5px;
-  margin-bottom: -5px;
+  padding: 5px;
+  margin-left: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .title {
@@ -144,7 +140,7 @@
 }
 
 .chartLine {
-  height: 550px;
+  height: 500px;
 }
 
 .chartBar {

@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify
 from numpy import minimum
 import psycopg2
-from datetime import datetime
 import warnings
 import pandas as pd
 from sklearn.metrics import r2_score
@@ -15,6 +14,43 @@ conn = psycopg2.connect(database="postgres", user="postgres",
                         password="Aa@123456", host="127.0.0.1", port="5432")
 
 
+@btcData.route("/btc/profit/deals", methods=["GET"])
+def get_btc_deals():
+    res = {}
+    cur = conn.cursor()
+    cur.execute(
+        '''SELECT COUNT(*) FROM Recommendations''')
+    rows = cur.fetchall()
+    conn.commit()
+
+    res["count"] = rows[0][0]
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@btcData.route("/btc/profit/details/lastOperation", methods=["GET"])
+def get_btc_profit_details_last_operation():
+    res = {}
+    cur = conn.cursor()
+    cur.execute(
+        '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 1''')
+    rows = cur.fetchall()
+    conn.commit()
+
+    if rows[0][1] == "BUY":
+        res["price"] = rows[0][2]
+    else:
+        res["price"] = -1
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
 @btcData.route("/btc/profit/details", methods=["GET"])
 def get_btc_profit_details():
     res = []
@@ -23,12 +59,14 @@ def get_btc_profit_details():
         '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 6''')
     rows = cur.fetchall()
     conn.commit()
+    rows.reverse()
 
-    if rows[0][1] == "SELL":
-        rows = rows[1:]
+    if len(rows) > 2:
+        if rows[0][1] == "SELL":
+            rows = rows[1:]
 
-    if rows[len(rows) - 1][1] == "BUY":
-        rows = rows[:-1]
+        if rows[len(rows) - 1][1] == "BUY":
+            rows = rows[:-1]
 
     for i in range(len(rows)):
         current_res = {}

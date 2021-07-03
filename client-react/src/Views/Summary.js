@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import wallet from "../img/money-bag.svg";
 import exchange_green from "../img/exchange.svg";
 import exchange_red from "../img/exchange-red.svg";
-import returns from "../img/tax.svg";
+import returns from "../img/discount.svg";
 
 class Summary extends Component {
   constructor() {
