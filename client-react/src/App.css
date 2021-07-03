@@ -22,8 +22,7 @@
   float: inline-start;
   display: block;
   color: #f2f2f2;
-  /* padding: 20px; */
-  margin-top: 30px;
+  margin-top: 25px;
   font-size: medium;
   flex-wrap: wrap;
 }
@@ -59,8 +58,8 @@
 
 #navbar img {
   padding: 14px;
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
 }
 
 /* Page content */
@@ -103,13 +102,18 @@
   max-height: 650px;
   /* max-width: 200px; */
   padding: 35px;
-  margin: 15px 0px;
+  margin: 15px 15px;
   position: relative;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   transition: 0.3s;
   box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.034);
+}
+
+.action-buttons {
+  /* padding: 100px; */
+  margin: 0px 650px;
 }
 
 .radar-chart {

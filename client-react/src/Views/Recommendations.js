@@ -22,12 +22,17 @@ class Recommendations extends Component {
     const { data } = this.state;
     var content = [];
 
+    //profit/loss
+
     data.forEach((recom) => {
       content.push(
         <tr>
-          <td className="column11">{recom.datetime}</td>
-          <td className="column22">{recom.recommendation}</td>
-          <td className="column5">{Number(recom.price).toLocaleString()}</td>
+          <td className="column1">{recom.datetime}</td>
+          <td className="column2">{recom.recommendation}</td>
+          <td className="column3">
+            {Number(recom["profit/loss"]).toLocaleString()}
+          </td>
+          <td className="column4">{Number(recom.price).toLocaleString()}</td>
         </tr>
       );
     });
@@ -42,9 +47,10 @@ class Recommendations extends Component {
               <table>
                 <thead>
                   <tr className="table100-head">
-                    <th className="column11">Time</th>
-                    <th className="column22">Recommendation</th>
-                    <th className="column5">Price</th>
+                    <th className="column1">Time</th>
+                    <th className="column2">Recommendation</th>
+                    <th className="column3">Profit/Loss</th>
+                    <th className="column4">Price</th>
                   </tr>
                 </thead>
                 {table_content}

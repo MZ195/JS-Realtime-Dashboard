@@ -43,7 +43,10 @@ def get_btc_profit_details_last_operation():
     if rows[0][1] == "BUY":
         res["price"] = rows[0][2]
     else:
-        res["price"] = -1
+        res["price"] = 0.0
+
+    res["operation"] = rows[0][1]
+    res["datetime"] = str(rows[0][0]).split(" ")[1]
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')
@@ -65,11 +68,17 @@ def get_btc_profit_details():
         if rows[0][1] == "SELL":
             rows = rows[1:]
 
-        if rows[len(rows) - 1][1] == "BUY":
-            rows = rows[:-1]
+    previous_buy = 0
 
     for i in range(len(rows)):
         current_res = {}
+
+        if str(rows[i][1]) == "BUY":
+            previous_buy = rows[i][2]
+            current_res["profit/loss"] = 0.0
+        else:
+            current_res["profit/loss"] = rows[i][2] - previous_buy
+
         current_res["datetime"] = str(rows[i][0]).split(" ")[1]
         current_res["recommendation"] = str(rows[i][1])
         current_res["price"] = str(rows[i][2])
@@ -205,6 +214,28 @@ def predict_btc_price_ses():
     cur = conn.cursor()
     cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
                     FROM BTC_Price_Prediction_SES
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    rows = cur.fetchall()
+    for row in rows:
+        row_item = {}
+        row_item["datetime"] = str(row[0]).split("+")[0].split(" ")[1][:8]
+        row_item["price"] = row[1]
+        res.append(row_item)
+    conn.commit()
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@btcData.route("/predict/RF", methods=["GET"])
+def predict_btc_price_rf():
+    res = []
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction_RF
                     WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
                     GROUP BY time_ 
                     ORDER BY time_''')
@@ -365,6 +396,48 @@ def get_model_score_ses():
     return result
 
 
+@btcData.route("/score/RF", methods=["GET"])
+def get_model_score_RF():
+    res = {}
+    cur = conn.cursor()
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' time_ , avg(price) price_
+                    FROM BTC_Price_Prediction
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY time_ 
+                    ORDER BY time_''')
+    pred_rows = cur.fetchall()
+
+    cur.execute('''SELECT to_timestamp(floor((extract('epoch' from Created_at) / 30 )) * 30) AT TIME ZONE 'UTC' new_time, avg(price)  
+                    FROM BTC_Price_Prediction_RF
+                    WHERE created_at <= date_trunc('hour',  now() + interval '1 hour') and created_at >= (now() - interval '30 minute')
+                    GROUP BY new_time 
+                    ORDER BY new_time''')
+    actual_rows = cur.fetchall()
+
+    conn.commit()
+
+    actual_df = pd.DataFrame(actual_rows, columns=['time', 'price'])
+    preds_df = pd.DataFrame(pred_rows, columns=['time', 'preds'])
+
+    actual_values = [x for x in actual_df["price"]]
+    preds_values = [x for x in preds_df["preds"]]
+
+    min_val = minimum(len(actual_values), len(preds_values))
+
+    preds_values = preds_values[:min_val-1]
+    actual_values = actual_values[:min_val-1]
+
+    res["RMSE"] = mean_squared_error(
+        actual_values, preds_values, squared=False)
+    res["MAE"] = mean_absolute_error(actual_values, preds_values)
+    res["MSE"] = mean_squared_error(actual_values, preds_values)
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
 @btcData.route("/score/overall", methods=["GET"])
 def get_model_score_overall():
     cur = conn.cursor()
@@ -389,10 +462,10 @@ def get_model_score_overall():
     actual_values = [x for x in actual_df["price"]]
     preds_values = [x for x in preds_df["preds"]]
 
-    min = minimum(len(actual_values), len(preds_values))
+    min_val = minimum(len(actual_values), len(preds_values))
 
-    preds_values = preds_values[:min-1]
-    actual_values = actual_values[:min-1]
+    preds_values = preds_values[:min_val-1]
+    actual_values = actual_values[:min_val-1]
 
     r2 = r2_score(actual_values, preds_values)
 

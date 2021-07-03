@@ -7,6 +7,7 @@ class ScoresSummary extends Component {
       arima_score: [],
       varmax_score: [],
       ses_score: [],
+      rf_score: [],
     };
   }
 
@@ -29,6 +30,12 @@ class ScoresSummary extends Component {
         .then((data) => {
           this.setState({ ses_score: data });
         });
+
+      fetch("http://localhost:9000/score/RF")
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ rf_score: data });
+        });
     }, 30000);
   }
 
@@ -36,15 +43,16 @@ class ScoresSummary extends Component {
     const { arima_score } = this.state;
     const { varmax_score } = this.state;
     const { ses_score } = this.state;
+    const { rf_score } = this.state;
 
     var content = [];
 
     content.push(
       <tr>
-        <td className="column1">ARIMA</td>
-        <td className="column2">{Number(arima_score.RMSE).toLocaleString()}</td>
-        <td className="column3">{Number(arima_score.MAE).toLocaleString()}</td>
-        <td className="column4">{Number(arima_score.MSE).toLocaleString()}</td>
+        <td className="column1">Random Forest</td>
+        <td className="column2">{Number(rf_score.RMSE).toLocaleString()}</td>
+        <td className="column3">{Number(rf_score.MAE).toLocaleString()}</td>
+        <td className="column4">{Number(rf_score.MSE).toLocaleString()}</td>
       </tr>,
       <tr>
         <td className="column1">VARMAX</td>
@@ -53,6 +61,12 @@ class ScoresSummary extends Component {
         </td>
         <td className="column3">{Number(varmax_score.MAE).toLocaleString()}</td>
         <td className="column4">{Number(varmax_score.MSE).toLocaleString()}</td>
+      </tr>,
+      <tr>
+        <td className="column1">ARIMA</td>
+        <td className="column2">{Number(arima_score.RMSE).toLocaleString()}</td>
+        <td className="column3">{Number(arima_score.MAE).toLocaleString()}</td>
+        <td className="column4">{Number(arima_score.MSE).toLocaleString()}</td>
       </tr>,
       <tr>
         <td className="column1">SES</td>
