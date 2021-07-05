@@ -189,11 +189,56 @@ class BTPrice extends Component {
         }
       }
 
-      if (BTC_last_operation.price !== -1) {
-        chartJSData.datasets[6].data.push(BTC_last_operation.price);
-        chartJSData.datasets[6].pointBackgroundColor.push(
-          "rgba(255, 175, 0, 0.9)"
-        );
+      if (BTC_last_operation.datetime !== undefined) {
+        var currentHour2 = BTC_last_operation.datetime.substring(0, 2);
+        var currentMinutes2 = BTC_last_operation.datetime.substring(3, 5);
+        var currentSeconds2 = BTC_last_operation.datetime.substring(6, 8);
+
+        var currentHour1 = item.datetime.substring(0, 2);
+        var currentMinutes1 = item.datetime.substring(3, 5);
+        var currentSeconds1 = item.datetime.substring(6, 8);
+
+        var last_operation = new Date();
+        var current_item = new Date();
+
+        if (currentHour2 === "23") {
+          last_operation.setDate(last_operation.getDate() - 1);
+          last_operation.setMinutes(currentMinutes2);
+          last_operation.setSeconds(currentSeconds2);
+          last_operation.setHours(currentHour2);
+
+          current_item.setDate(current_item.getDate() - 1);
+          current_item.setMinutes(currentMinutes1);
+          current_item.setSeconds(currentSeconds1);
+          current_item.setHours(currentHour1);
+        } else {
+          last_operation.setMinutes(currentMinutes2);
+          last_operation.setSeconds(currentSeconds2);
+          last_operation.setHours(currentHour2);
+
+          current_item.setMinutes(currentMinutes1);
+          current_item.setSeconds(currentSeconds1);
+          current_item.setHours(currentHour1);
+        }
+
+        let last_operation_num = BigNumber(last_operation.getTime());
+        let current_item_num = BigNumber(current_item.getTime());
+
+        let diff = Number(last_operation_num.minus(current_item_num));
+
+        if (BTC_last_operation.price !== 0.0) {
+          chartJSData.datasets[6].data.push(BTC_last_operation.price);
+          if (diff >= 0) {
+            console.log(diff);
+            chartJSData.datasets[6].pointBackgroundColor.push(
+              "rgba(255, 123, 0, 0.9)"
+            );
+          } else {
+            chartJSData.datasets[6].pointBackgroundColor.push(
+              "rgba(255, 175, 0, 0.9)"
+            );
+          }
+        }
       }
 
       chartJSData.datasets[1].data.push(item.price);

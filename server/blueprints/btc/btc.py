@@ -1,5 +1,7 @@
 from flask import Blueprint, jsonify
 from numpy import minimum
+from datetime import datetime
+import requests
 import psycopg2
 import warnings
 import pandas as pd
@@ -24,6 +26,68 @@ def get_btc_deals():
     conn.commit()
 
     res["count"] = rows[0][0]
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@btcData.route("/btc/recommendation/sell", methods=["GET"])
+def post_btc_recommendation_sell():
+
+    ACTUAL_URL = "http://localhost:9000/btc/price"
+
+    actual_res = requests.get(url=ACTUAL_URL)
+    actual_data = actual_res.json()[-1:]
+
+    current_time_str = actual_data[0]["datetime"].split(":")
+
+    price = actual_data[0]["price"]
+
+    current_time = datetime.now()
+    current_time = current_time.replace(hour=int(current_time_str[0]), minute=int(
+        current_time_str[1]), second=int(current_time_str[2]), microsecond=0)
+
+    cur = conn.cursor()
+    cur.execute(
+        f"INSERT INTO Recommendations (Created_at,recommendation,price) VALUES ('{str(current_time)}', 'SELL', {price})")
+    conn.commit()
+
+    res = {}
+
+    res["status"] = "Success"
+
+    result = jsonify(res)
+    result.headers.add('Access-Control-Allow-Origin', '*')
+
+    return result
+
+
+@btcData.route("/btc/recommendation/buy", methods=["GET"])
+def post_btc_recommendation_buy():
+
+    ACTUAL_URL = "http://localhost:9000/btc/price"
+
+    actual_res = requests.get(url=ACTUAL_URL)
+    actual_data = actual_res.json()[-1:]
+
+    current_time_str = actual_data[0]["datetime"].split(":")
+
+    price = actual_data[0]["price"]
+
+    current_time = datetime.now()
+    current_time = current_time.replace(hour=int(current_time_str[0]), minute=int(
+        current_time_str[1]), second=int(current_time_str[2]), microsecond=0)
+
+    cur = conn.cursor()
+    cur.execute(
+        f"INSERT INTO Recommendations (Created_at,recommendation,price) VALUES ('{str(current_time)}', 'BUY', {price})")
+    conn.commit()
+
+    res = {}
+
+    res["status"] = "Success"
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')

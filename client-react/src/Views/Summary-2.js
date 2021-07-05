@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import auction from "../img/auction.svg";
 import accuracy from "../img/accuracy.svg";
-import dollar from "../img/return.svg";
+import returns from "../img/return.svg";
 
 class Summary2 extends Component {
   constructor() {
@@ -46,16 +46,16 @@ class Summary2 extends Component {
           <div className="card-content">
             <div className="card-body">
               <div className="row">
-                <div className="col-xl-4 col-lg-6 col-md-12 border-right clearfix">
+                <div className="col-xl-2 col-lg-6 col-md-12 border-right clearfix">
                   <div className="float-left pl-2 block-content">
                     <span className="title">Runing Amount</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
                       {Number(profit["runing_amount"]).toLocaleString()} $
-                      <img src={dollar} alt="" />
+                      <img src={returns} alt="" />
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-4 col-lg-6 col-md-12 border-right clearfix">
+                <div className="col-xl-2 col-lg-6 col-md-12 border-right clearfix">
                   <div className="float-left pl-2 block-content">
                     <span className="title">Number of Deals</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">
@@ -64,7 +64,7 @@ class Summary2 extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-4 col-lg-6 col-md-12 clearfix">
+                <div className="col-xl-2 col-lg-6 col-md-12 clearfix">
                   <div className="float-left pl-2 block-content">
                     <span className="title">Model Score (R²)</span>
                     <div className="font-large-3 line-height-1 text-bold-33 value">

@@ -44,6 +44,14 @@
   font-size: larger;
 }
 
+.value-action-buy:hover {
+  cursor: pointer;
+}
+
+.value-action-sell:hover {
+  cursor: pointer;
+}
+
 .value img {
   padding: 5px;
   margin-left: 5px;
@@ -113,7 +121,7 @@
 
 .action-buttons {
   /* padding: 100px; */
-  margin: 0px 650px;
+  margin: 0px 750px;
 }
 
 .radar-chart {
@@ -144,7 +152,7 @@
 }
 
 .chartLine {
-  height: 500px;
+  height: 550px;
 }
 
 .chartBar {
@@ -173,6 +181,28 @@
 .card-body {
   background-color: #1f2130;
   border-radius: 30px;
+}
+
+.card-content-action {
+  background-color: #1f2130;
+}
+
+.card-body-action-buy {
+  background-color: rgb(88, 216, 163);
+  border-radius: 5px;
+}
+
+.card-body-action-buy:hover {
+  background-color: rgb(65, 196, 141);
+}
+
+.card-body-action-sell {
+  background-color: rgb(233, 30, 99);
+  border-radius: 5px;
+}
+
+.card-body-action-sell:hover {
+  background-color: rgb(202, 17, 78);
 }
 
 .statistics:hover {
