@@ -229,7 +229,6 @@ class BTPrice extends Component {
         if (BTC_last_operation.price !== 0.0) {
           chartJSData.datasets[6].data.push(BTC_last_operation.price);
           if (diff >= 0) {
-            console.log(diff);
             chartJSData.datasets[6].pointBackgroundColor.push(
               "rgba(255, 123, 0, 0.9)"
             );

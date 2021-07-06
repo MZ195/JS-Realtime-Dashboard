@@ -30,13 +30,6 @@ class Tweets extends Component {
     const { PositiveTweetsData } = this.state;
     const { NegativeTweetsData } = this.state;
 
-    // var canvas = document.getElementById("lineChart");
-    // var ctx = canvas.getContext("2d");
-
-    // var gradientFill = ctx.createLinearGradient(0, 0, 0, 290);
-    // gradientFill.addColorStop(0, "rgba(173, 53, 186, 1)");
-    // gradientFill.addColorStop(1, "rgba(173, 53, 186, 0.1)");
-
     let chartJSData = {
       labels: [],
       datasets: [
