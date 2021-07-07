@@ -5,15 +5,21 @@ from json import loads, dumps
 from datetime import datetime
 import psycopg2
 
+# Create Database connection
 conn = psycopg2.connect(database="postgres", user="postgres",
                         password="Aa@123456", host="127.0.0.1", port="5432")
 
+# Initilize the sentiment analyzer
 sia = SentimentIntensityAnalyzer()
 
 
 def consume_data():
+
+    # Create Kafka consumer
     consumer = KafkaConsumer('important_tweets', bootstrap_servers=['127.0.0.1:9092'], auto_offset_reset='earliest',
                              enable_auto_commit=True, group_id='twitter-analyzer', value_deserializer=lambda x: loads(x.decode('utf-8')))
+    
+    # Create Kafka producer
     producer = KafkaProducer(bootstrap_servers=[
         '127.0.0.1:9092'], value_serializer=lambda x: dumps(x).encode('utf-8'))
     for message in consumer:

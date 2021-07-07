@@ -57,7 +57,7 @@ function App() {
                     <div className="row">
                       <div className="col">
                         <div className="row">
-                          <div className="daily_summary statistics2">
+                          <div className="daily_summary statistics2 recommendations">
                             <Recommendations />
                           </div>
                         </div>

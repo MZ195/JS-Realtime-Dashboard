@@ -107,7 +107,7 @@
 .statistics2 {
   background-color: #1f2130;
   border-radius: 30px;
-  max-height: 650px;
+  /* max-height: 650px; */
   /* max-width: 200px; */
   padding: 35px;
   margin: 15px 15px;
@@ -139,7 +139,7 @@
 .daily_summary {
   background-color: #1f2130;
   border-radius: 30px;
-  max-height: 650px;
+  /* max-height: 650px; */
   /* max-width: 200px; */
   padding: 5px;
   margin: 15px 15px;
@@ -157,6 +157,10 @@
 
 .chartBar {
   height: 400px;
+}
+
+.recommendations{
+  height: 330px;
 }
 
 .statistics {
@@ -269,7 +273,7 @@ html {
 }
 
 .table-responsive {
-  max-height: 250px;
+  max-height: 280px;
   /* border-radius: 5px; */
   /* border: 1px solid rgba(0, 0, 0, 0.034); */
   /* box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.034); */

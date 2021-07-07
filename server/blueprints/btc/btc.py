@@ -21,11 +21,11 @@ def get_btc_deals():
     res = {}
     cur = conn.cursor()
     cur.execute(
-        '''SELECT COUNT(*) FROM Recommendations''')
+        '''SELECT COUNT(*)/3 FROM Recommendations''')
     rows = cur.fetchall()
     conn.commit()
 
-    res["count"] = rows[0][0]
+    res["count"] = int(rows[0][0])
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')
@@ -123,7 +123,7 @@ def get_btc_profit_details():
     res = []
     cur = conn.cursor()
     cur.execute(
-        '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 6''')
+        '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 20''')
     rows = cur.fetchall()
     conn.commit()
     rows.reverse()
@@ -143,10 +143,11 @@ def get_btc_profit_details():
         else:
             current_res["profit/loss"] = rows[i][2] - previous_buy
 
-        current_res["datetime"] = str(rows[i][0]).split(" ")[1]
+        current_res["datetime"] = str(rows[i][0])
         current_res["recommendation"] = str(rows[i][1])
         current_res["price"] = str(rows[i][2])
-        res.append(current_res)
+        if str(rows[i][1]) != "BUY":
+            res.append(current_res)
 
     result = jsonify(res)
     result.headers.add('Access-Control-Allow-Origin', '*')

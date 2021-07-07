@@ -28,8 +28,8 @@ class Recommendations extends Component {
       content.push(
         <tr>
           <td className="column1">{recom.datetime}</td>
-          <td className="column2">{recom.recommendation}</td>
-          <td className="column3">
+          {/* <td className="column2">{recom.recommendation}</td> */}
+          <td className="column2">
             {Number(recom["profit/loss"]).toLocaleString()}
           </td>
           <td className="column4">{Number(recom.price).toLocaleString()}</td>
@@ -47,8 +47,8 @@ class Recommendations extends Component {
               <table>
                 <thead>
                   <tr className="table100-head">
-                    <th className="column1">Time</th>
-                    <th className="column2">Recommendation</th>
+                    <th className="column1">Date</th>
+                    {/* <th className="column2">Recommendation</th> */}
                     <th className="column3">Profit/Loss</th>
                     <th className="column4">Price</th>
                   </tr>
