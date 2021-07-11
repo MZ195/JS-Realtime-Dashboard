@@ -15,4 +15,4 @@ def create_app(app):
 
 if __name__ == "__main__":
     app = Flask(__name__)
-    create_app(app).run(debug=True, port=9000)
+    create_app(app).run(host="0.0.0.0", debug=False, port=9000)

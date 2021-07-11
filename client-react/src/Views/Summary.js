@@ -19,19 +19,19 @@ class Summary extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://127.0.0.1:9000/btc/profit")
+      fetch(`http://${window.location.hostname}:9000/btc/profit`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ profit: data });
         });
 
-      fetch("http://127.0.0.1:9000/score/overall")
+      fetch(`http://${window.location.hostname}:9000/score/overall`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ model_score: data });
         });
 
-      fetch("http://localhost:9000/btc/profit/deals")
+      fetch(`http://${window.location.hostname}:9000/btc/profit/deals`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ deals: data });

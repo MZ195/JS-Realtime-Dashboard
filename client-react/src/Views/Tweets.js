@@ -12,13 +12,13 @@ class Tweets extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/tweets/pos")
+      fetch(`http://${window.location.hostname}:9000/tweets/pos`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ PositiveTweetsData: data });
         });
 
-      fetch("http://localhost:9000/tweets/neg")
+      fetch(`http://${window.location.hostname}:9000/tweets/neg`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ NegativeTweetsData: data });

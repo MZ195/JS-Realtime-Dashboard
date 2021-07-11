@@ -40,6 +40,8 @@ while(1):
 
     history = [list(x) for x in merge_df.values]
 
+    # (Time, BTC Price, Count of tweets)
+
     results = []
     try:
         for i in range(0, 2):

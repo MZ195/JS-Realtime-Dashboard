@@ -27,12 +27,14 @@ class ActionButtons extends Component {
 
     if (BTC_last_operation["operation"] === "SELL") {
       sell_buy_action = (e) =>
-        fetch("http://localhost:9000/btc/recommendation/buy");
+        fetch(`http://${window.location.hostname}:9000/btc/recommendation/buy`);
       statement = "BUY";
       style = "card-body-action-buy";
     } else {
       sell_buy_action = (e) =>
-        fetch("http://localhost:9000/btc/recommendation/sell");
+        fetch(
+          `http://${window.location.hostname}:9000/btc/recommendation/sell`
+        );
       statement = "SELL";
       style = "card-body-action-sell";
     }

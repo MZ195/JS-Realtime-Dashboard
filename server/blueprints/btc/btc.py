@@ -123,7 +123,7 @@ def get_btc_profit_details():
     res = []
     cur = conn.cursor()
     cur.execute(
-        '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 20''')
+        '''SELECT created_at, recommendation, price FROM Recommendations ORDER BY created_at DESC LIMIT 14''')
     rows = cur.fetchall()
     conn.commit()
     rows.reverse()

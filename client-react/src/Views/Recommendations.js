@@ -10,7 +10,7 @@ class Recommendations extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/btc/profit/details")
+      fetch(`http://${window.location.hostname}:9000/btc/profit/details`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ data: data });

@@ -13,25 +13,25 @@ class ScoresSummary extends Component {
 
   componentDidMount() {
     setInterval(async () => {
-      fetch("http://localhost:9000/score/ARIMA")
+      fetch(`http://${window.location.hostname}:9000/score/ARIMA`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ arima_score: data });
         });
 
-      fetch("http://localhost:9000/score/VARMAX")
+      fetch(`http://${window.location.hostname}:9000/score/VARMAX`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ varmax_score: data });
         });
 
-      fetch("http://localhost:9000/score/SES")
+      fetch(`http://${window.location.hostname}:9000/score/SES`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ ses_score: data });
         });
 
-      fetch("http://localhost:9000/score/RF")
+      fetch(`http://${window.location.hostname}:9000/score/RF`)
         .then((res) => res.json())
         .then((data) => {
           this.setState({ rf_score: data });
