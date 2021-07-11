@@ -18,7 +18,7 @@ The project went through 4 stages:
 - **Stage 3**: Read the data from SQL and train the model to predict the price.
 - **Stage 4**: Build the dashboard as a web page using react to make it accessible for the end user.
 
-![arcitecture!](/images/Arcitecture.png)
+![arcitecture!](/icons/architecture.gif)
 
 ## PROJECT STRUCTURE
 `Data` Folder have all the datasets used to train the models.<br/>
