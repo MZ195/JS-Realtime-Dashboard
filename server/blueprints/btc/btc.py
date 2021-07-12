@@ -164,9 +164,11 @@ def get_btc_profit():
     rows = cur.fetchall()
     conn.commit()
 
+    # if the 1st operation is sell remove it
     if rows[0][1] == "SELL":
         rows = rows[1:]
 
+    # if the last operation is buy remove it
     if rows[len(rows) - 1][1] == "BUY":
         rows = rows[:-1]
 
@@ -176,20 +178,21 @@ def get_btc_profit():
 
     # Investment
     amount = 10000
-    transactions_num = len(df)
-    transactions_fees = 0.5  # maybe we need to use if statements here
-    total_fees = transactions_num * transactions_fees
 
     for i in range(len(df)):
         if df["recommendation"].iloc[i] == "SELL":
+            # to keep track of profit/loss percentage
             df["pct"].iloc[i] = (df["price"].iloc[i] -
                                  df["price"].iloc[i-1])/df["price"].iloc[i-1]
+            
+            # to keep track of the running amount after selling
             if i <= 1:
                 df["runing_amount"].iloc[i] = (1+df["pct"].iloc[i])*amount
             else:
                 df["runing_amount"].iloc[i] = (
                     1+df["pct"].iloc[i])*df["runing_amount"].iloc[i-2]
 
+    # to get the percentage of profit/loss from the inital investment
     rtn_pct = (df["runing_amount"].iloc[-1]) / amount * 100
 
     # dollar profit/loss

@@ -93,6 +93,7 @@
 
 .App {
   text-align: center;
+  background-color: #1a1c29;
 }
 
 .App-header {
@@ -159,7 +160,7 @@
   height: 400px;
 }
 
-.recommendations{
+.recommendations {
   height: 330px;
 }
 
@@ -270,6 +271,22 @@ html {
   /* padding: 15px 15px 5px 15px;
    */
   padding: 15px 0px;
+}
+
+.loading-view {
+  background-color: #ffffff;
+  border-radius: 30px;
+  max-height: 750px;
+  /* max-width: 200px; */
+  padding: 35px;
+  margin: 15px 15px;
+  color: rgb(0, 0, 0);
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  transition: 0.3s;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.34);
 }
 
 .table-responsive {

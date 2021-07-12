@@ -47,7 +47,7 @@ def get_negative_tweets():
     rows = cur.fetchall()
     for row in rows:
         row_item = {}
-        row_item["datetime"] = str(row[1]).split("+")[0][:8]
+        row_item["datetime"] = str(row[1]).split("+")[0].split(" ")[1][:8]
         row_item["count"] = row[0]
         res.append(row_item)
     conn.commit()
@@ -73,7 +73,7 @@ def get_count_tweets():
     return result
 
 
-@tweetsData.route("/tweets/daily", methods=["GET"])
+@tweetsData.route(" ", methods=["GET"])
 def get_daily_tweets():
     res = []
     cur = conn.cursor()

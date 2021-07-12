@@ -165,6 +165,7 @@ class BTPrice extends Component {
     });
 
     BTC_Prediction_ARIMA.forEach((item) => {
+      // This is a prediction
       if (!chartJSData.labels.includes(item.datetime)) {
         var currentHour = item.datetime.substring(0, 2);
         var currentMinutes = item.datetime.substring(3, 5);
