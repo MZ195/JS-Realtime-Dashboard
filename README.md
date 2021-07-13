@@ -10,11 +10,20 @@ Team members:
 - [Ruba Yousuf](https://github.com/RubaYousuf)
 - [Tahani Albarakati](https://github.com/Tahani-Albarakati)
 
+## Business Problem
+Day Traders often seek out the market's most volatile financial assets in order to take advantage of intra-day price action and short-term momentum strategies. It can be said that cryptocurrency is one of the most volatile asset among them all. <br/>
+For that reason, and also due to the recent hype in cryptocurrencies, we thought that it would be interesting to build a predictive model for the day traders. <br/>
+The model should help them take actions based on those predictions ahead of time, before any other market participant.
+
 ## Data
 The Data used in this project were fetched from 3 sources:
 - [Coin Market Cap Website](https://coinmarketcap.com/currencies/bitcoin/)
 - [Coin Desk API](https://api.coindesk.com/v1/bpi/currentprice.json)
 - [Twitter API](https://developer.twitter.com/en/docs/twitter-api)
+
+<p align="center">
+  <img src="/images/DB-tables.png" />
+</p>
 
 ## Project Description
 In this project we utilized different technologies to come up with a real-time dashboard for bitcoin prices.<br/>
@@ -24,8 +33,9 @@ The project went through 4 stages:
 - **Stage 3**: Read the data from SQL and train the model to predict the price.
 - **Stage 4**: Build the dashboard as a web page using React to make it accessible for end users.
 
-![arcitecture!](/images/architecture.gif)
-
+<p align="center">
+  <img src="/images/architecture.gif" />
+</p>
 
 ## Visualization
 Let's take a look at the price of Bitcoin over the course of a whole day.<br/>
@@ -39,6 +49,12 @@ In the modeling process we decided to use 4 different models:
 - [VARMAX](https://www.analyticsvidhya.com/blog/2018/09/multivariate-time-series-guide-forecasting-modeling-python-codes/), which can help us find relation between the Bitcon price & Tweets
 - [SES](https://machinelearningmastery.com/exponential-smoothing-for-time-series-forecasting-in-python/#:~:text=Single%20Exponential%20Smoothing%2C%20SES%20for,smoothing%20factor%20or%20smoothing%20coefficient.), which is the simplest approcach to Time Series Forecasting.
 - [Random Forest Regressor](https://en.wikipedia.org/wiki/Random_forest). By using the predictions from the other 3 models, we can train a random forest to help us get better accuracy.
+
+### Data Flow From Source to Every Model
+
+<p align="center">
+  <img src="/images/data-flow.png" />
+</p>
 
 This is an over view of the models performace:<br/>
 ![all-models!](/images/All_models.png)
