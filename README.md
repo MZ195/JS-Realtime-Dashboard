@@ -63,3 +63,21 @@ This is an over view of the models performace:<br/>
 `Models` Folder have Jupyter Notebooks for all different models used in the modeling stage.<br/>
 `client-react` is the react web application.<br/>
 `server` is a Flask back-end for the react web application.<br/>
+
+## Future Improvements
+Due to time constraints, the project didn't reach it's full potentional, but here we will outline few ideas that can be further developed:
+
+-	Include more features that may influence BTC price. E.g.: number of active BTC addresses, bid & ask prices, inflation rates, etc.<br/>
+-	Include other models to compare the results, such as, Facebook Prophet.</br>
+-	Develop more sophisticated trading strategies other than the basic ones that we are using in our capstone model.<br/>
+-	Implementing some risk management techniques that could minimize our loses if the cryptocurrency market crashes.<br/>
+-	Building deep neural networks to look for new opportunities that will enhance the predictability of our model.<br/>
+-	Adding in the transaction fees and the market cost to make our model give us more realistic returns.<br/>
+
+
+## Conclusion
+
+-	This project shows that, simple financial data has some predictive power in forecasting short-term changes in price.<br/>
+But as we may add more factors into account to make it reflect a real-world transaction, there may be no practical opportunities to profit from these predicted information, and this particular predictive model will be relatively useless from a trading perspective.
+
+-	It is not a straightforward method to build a model with the predictive power to beat the market.
