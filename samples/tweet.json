@@ -1,32 +1,32 @@
 {
-   "created_at":"Mon Jul 12 11:27:00 +0000 2021",
-   "id":1414546831476920322,
-   "id_str":"1414546831476920322",
-   "text":"RT @ashwsbreal: $1000 in #Bitcoin to 1 person if I wake up to 250k. Retweet, be following me and tag your friends.",
-   "source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e",
-   "truncated":false,
+   "created_at":"Tue Jul 13 08:32:18 +0000 2021",
+   "id":1414865255952314369,
+   "id_str":"1414865255952314369",
+   "text":"This is a good project\ud83d\udd25\ud83d\ude80\n\n@AizaQureshi8 @MeherinSheza @laari_meloo @Minsakh48990410 @Laura_Treem11 @beccasun18\u2026 https:\/\/t.co\/SUvFzqimIX",
+   "source":"\u003ca href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e",
+   "truncated":true,
    "in_reply_to_status_id":null,
    "in_reply_to_status_id_str":null,
    "in_reply_to_user_id":null,
    "in_reply_to_user_id_str":null,
    "in_reply_to_screen_name":null,
    "user":{
-      "id":1371495876238184449,
-      "id_str":"1371495876238184449",
-      "name":"Richard Koncz",
-      "screen_name":"RichardKoncz1",
-      "location":null,
+      "id":1411870360987787266,
+      "id_str":"1411870360987787266",
+      "name":"Tm",
+      "screen_name":"tm_official5",
+      "location":"Brasil",
       "url":null,
       "description":null,
       "translator_type":"none",
       "protected":false,
       "verified":false,
-      "followers_count":18,
-      "friends_count":127,
+      "followers_count":4,
+      "friends_count":208,
       "listed_count":0,
-      "favourites_count":4149,
-      "statuses_count":162,
-      "created_at":"Mon Mar 15 16:18:01 +0000 2021",
+      "favourites_count":155,
+      "statuses_count":291,
+      "created_at":"Mon Jul 05 02:12:03 +0000 2021",
       "utc_offset":null,
       "time_zone":null,
       "geo_enabled":false,
@@ -42,8 +42,9 @@
       "profile_sidebar_fill_color":"DDEEF6",
       "profile_text_color":"333333",
       "profile_use_background_image":true,
-      "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1413400606891560966\/kn_u4MHG_normal.jpg",
-      "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1413400606891560966\/kn_u4MHG_normal.jpg",
+      "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1412086471394222083\/GNpKGpN-_normal.jpg",
+      "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1412086471394222083\/GNpKGpN-_normal.jpg",
+      "profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1411870360987787266\/1625451402",
       "default_profile":true,
       "default_profile_image":false,
       "following":null,
@@ -57,53 +58,59 @@
    "coordinates":null,
    "place":null,
    "contributors":null,
-   "retweeted_status":{
-      "created_at":"Mon Jul 12 07:53:31 +0000 2021",
-      "id":1414493107253559296,
-      "id_str":"1414493107253559296",
-      "text":"$1000 in #Bitcoin to 1 person if I wake up to 250k. Retweet, be following me and tag your friends.",
-      "source":"\u003ca href=\"http:\/\/twitter.com\/download\/iphone\" rel=\"nofollow\"\u003eTwitter for iPhone\u003c\/a\u003e",
-      "truncated":false,
+   "quoted_status_id":1414470756440805380,
+   "quoted_status_id_str":"1414470756440805380",
+   "quoted_status":{
+      "created_at":"Mon Jul 12 06:24:42 +0000 2021",
+      "id":1414470756440805380,
+      "id_str":"1414470756440805380",
+      "text":"\ud83d\udc4bWelcome words from KuApe Finance\n\n\ud83d\ude4e\u200d\u2642\ufe0fAlmost 1200 followers on Twitter, let make Kucoin Community Chain great agai\u2026 https:\/\/t.co\/545d9V5PjX",
+      "display_text_range":[
+         0,
+         140
+      ],
+      "source":"\u003ca href=\"https:\/\/mobile.twitter.com\" rel=\"nofollow\"\u003eTwitter Web App\u003c\/a\u003e",
+      "truncated":true,
       "in_reply_to_status_id":null,
       "in_reply_to_status_id_str":null,
       "in_reply_to_user_id":null,
       "in_reply_to_user_id_str":null,
       "in_reply_to_screen_name":null,
       "user":{
-         "id":3185716686,
-         "id_str":"3185716686",
-         "name":"Ash WSB \ud83c\udf65",
-         "screen_name":"ashwsbreal",
-         "location":"Moon \ud83d\ude80",
-         "url":null,
-         "description":"#AshArmy\u270a                             \n Nothing i Tweet is a financial advice",
+         "id":1413081476669710337,
+         "id_str":"1413081476669710337",
+         "name":"KUAPE FINANCE",
+         "screen_name":"kuapefinance",
+         "location":null,
+         "url":"http:\/\/kuape.finance",
+         "description":"The official twitter of KuApe Finance\n\nVisit here: https:\/\/t.co\/Znsl3qxZ7n\n\nTelegram channel: https:\/\/t.co\/TSwJNpq6Fl\n\n#KUAPE #KCC #DEX #IDO #MEME #KUCOIN #KUCOINCOMMUNITYCHAIN",
          "translator_type":"none",
          "protected":false,
          "verified":false,
-         "followers_count":247655,
-         "friends_count":135,
-         "listed_count":357,
-         "favourites_count":5063,
-         "statuses_count":5614,
-         "created_at":"Tue May 05 02:01:09 +0000 2015",
+         "followers_count":33354,
+         "friends_count":8,
+         "listed_count":7,
+         "favourites_count":0,
+         "statuses_count":17,
+         "created_at":"Thu Jul 08 10:24:19 +0000 2021",
          "utc_offset":null,
          "time_zone":null,
          "geo_enabled":false,
          "lang":null,
          "contributors_enabled":false,
          "is_translator":false,
-         "profile_background_color":"C0DEED",
-         "profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
-         "profile_background_image_url_https":"https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+         "profile_background_color":"F5F8FA",
+         "profile_background_image_url":"",
+         "profile_background_image_url_https":"",
          "profile_background_tile":false,
          "profile_link_color":"1DA1F2",
          "profile_sidebar_border_color":"C0DEED",
          "profile_sidebar_fill_color":"DDEEF6",
          "profile_text_color":"333333",
          "profile_use_background_image":true,
-         "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1355507489719148544\/PCJ0J14q_normal.jpg",
-         "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1355507489719148544\/PCJ0J14q_normal.jpg",
-         "profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/3185716686\/1612408509",
+         "profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/1413081673596506112\/J3DnmGv4_normal.jpg",
+         "profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1413081673596506112\/J3DnmGv4_normal.jpg",
+         "profile_banner_url":"https:\/\/pbs.twimg.com\/profile_banners\/1413081476669710337\/1625740048",
          "default_profile":true,
          "default_profile_image":false,
          "following":null,
@@ -118,22 +125,256 @@
       "place":null,
       "contributors":null,
       "is_quote_status":false,
-      "quote_count":24,
-      "reply_count":736,
-      "retweet_count":1478,
-      "favorite_count":1061,
+      "extended_tweet":{
+         "full_text":"\ud83d\udc4bWelcome words from KuApe Finance\n\n\ud83d\ude4e\u200d\u2642\ufe0fAlmost 1200 followers on Twitter, let make Kucoin Community Chain great again @kucoincom \n\n#KUAPE #KUCOIN #KCC #GIVEAWAY #MEME #BITCOIN #KUAPEFINANCE #DEX #IDO https:\/\/t.co\/0Ajj7fhUhc",
+         "display_text_range":[
+            0,
+            198
+         ],
+         "entities":{
+            "hashtags":[
+               {
+                  "text":"KUAPE",
+                  "indices":[
+                     130,
+                     136
+                  ]
+               },
+               {
+                  "text":"KUCOIN",
+                  "indices":[
+                     137,
+                     144
+                  ]
+               },
+               {
+                  "text":"KCC",
+                  "indices":[
+                     145,
+                     149
+                  ]
+               },
+               {
+                  "text":"GIVEAWAY",
+                  "indices":[
+                     150,
+                     159
+                  ]
+               },
+               {
+                  "text":"MEME",
+                  "indices":[
+                     160,
+                     165
+                  ]
+               },
+               {
+                  "text":"BITCOIN",
+                  "indices":[
+                     166,
+                     174
+                  ]
+               },
+               {
+                  "text":"KUAPEFINANCE",
+                  "indices":[
+                     175,
+                     188
+                  ]
+               },
+               {
+                  "text":"DEX",
+                  "indices":[
+                     189,
+                     193
+                  ]
+               },
+               {
+                  "text":"IDO",
+                  "indices":[
+                     194,
+                     198
+                  ]
+               }
+            ],
+            "urls":[
+               
+            ],
+            "user_mentions":[
+               {
+                  "screen_name":"kucoincom",
+                  "name":"KUCOIN",
+                  "id":910110294625492992,
+                  "id_str":"910110294625492992",
+                  "indices":[
+                     117,
+                     127
+                  ]
+               }
+            ],
+            "symbols":[
+               
+            ],
+            "media":[
+               {
+                  "id":1414469669566631938,
+                  "id_str":"1414469669566631938",
+                  "indices":[
+                     199,
+                     222
+                  ],
+                  "additional_media_info":{
+                     "monetizable":false
+                  },
+                  "media_url":"http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1414469669566631938\/pu\/img\/Qndv4BOZXKcMKZxx.jpg",
+                  "media_url_https":"https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1414469669566631938\/pu\/img\/Qndv4BOZXKcMKZxx.jpg",
+                  "url":"https:\/\/t.co\/0Ajj7fhUhc",
+                  "display_url":"pic.twitter.com\/0Ajj7fhUhc",
+                  "expanded_url":"https:\/\/twitter.com\/kuapefinance\/status\/1414470756440805380\/video\/1",
+                  "type":"video",
+                  "video_info":{
+                     "aspect_ratio":[
+                        16,
+                        9
+                     ],
+                     "duration_millis":50895,
+                     "variants":[
+                        {
+                           "bitrate":832000,
+                           "content_type":"video\/mp4",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/vid\/640x360\/V0qfNeX3jwK8u_eg.mp4?tag=12"
+                        },
+                        {
+                           "bitrate":2176000,
+                           "content_type":"video\/mp4",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/vid\/1280x720\/4jYZ4Pa5YAlft6Hn.mp4?tag=12"
+                        },
+                        {
+                           "content_type":"application\/x-mpegURL",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/pl\/CoPScKlPksV8Omaa.m3u8?tag=12&container=fmp4"
+                        },
+                        {
+                           "bitrate":256000,
+                           "content_type":"video\/mp4",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/vid\/480x270\/IMfAXOWx9UMul-3s.mp4?tag=12"
+                        }
+                     ]
+                  },
+                  "sizes":{
+                     "thumb":{
+                        "w":150,
+                        "h":150,
+                        "resize":"crop"
+                     },
+                     "medium":{
+                        "w":1200,
+                        "h":675,
+                        "resize":"fit"
+                     },
+                     "small":{
+                        "w":680,
+                        "h":383,
+                        "resize":"fit"
+                     },
+                     "large":{
+                        "w":1280,
+                        "h":720,
+                        "resize":"fit"
+                     }
+                  }
+               }
+            ]
+         },
+         "extended_entities":{
+            "media":[
+               {
+                  "id":1414469669566631938,
+                  "id_str":"1414469669566631938",
+                  "indices":[
+                     199,
+                     222
+                  ],
+                  "additional_media_info":{
+                     "monetizable":false
+                  },
+                  "media_url":"http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1414469669566631938\/pu\/img\/Qndv4BOZXKcMKZxx.jpg",
+                  "media_url_https":"https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1414469669566631938\/pu\/img\/Qndv4BOZXKcMKZxx.jpg",
+                  "url":"https:\/\/t.co\/0Ajj7fhUhc",
+                  "display_url":"pic.twitter.com\/0Ajj7fhUhc",
+                  "expanded_url":"https:\/\/twitter.com\/kuapefinance\/status\/1414470756440805380\/video\/1",
+                  "type":"video",
+                  "video_info":{
+                     "aspect_ratio":[
+                        16,
+                        9
+                     ],
+                     "duration_millis":50895,
+                     "variants":[
+                        {
+                           "bitrate":832000,
+                           "content_type":"video\/mp4",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/vid\/640x360\/V0qfNeX3jwK8u_eg.mp4?tag=12"
+                        },
+                        {
+                           "bitrate":2176000,
+                           "content_type":"video\/mp4",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/vid\/1280x720\/4jYZ4Pa5YAlft6Hn.mp4?tag=12"
+                        },
+                        {
+                           "content_type":"application\/x-mpegURL",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/pl\/CoPScKlPksV8Omaa.m3u8?tag=12&container=fmp4"
+                        },
+                        {
+                           "bitrate":256000,
+                           "content_type":"video\/mp4",
+                           "url":"https:\/\/video.twimg.com\/ext_tw_video\/1414469669566631938\/pu\/vid\/480x270\/IMfAXOWx9UMul-3s.mp4?tag=12"
+                        }
+                     ]
+                  },
+                  "sizes":{
+                     "thumb":{
+                        "w":150,
+                        "h":150,
+                        "resize":"crop"
+                     },
+                     "medium":{
+                        "w":1200,
+                        "h":675,
+                        "resize":"fit"
+                     },
+                     "small":{
+                        "w":680,
+                        "h":383,
+                        "resize":"fit"
+                     },
+                     "large":{
+                        "w":1280,
+                        "h":720,
+                        "resize":"fit"
+                     }
+                  }
+               }
+            ]
+         }
+      },
+      "quote_count":12305,
+      "reply_count":4593,
+      "retweet_count":15263,
+      "favorite_count":21078,
       "entities":{
          "hashtags":[
-            {
-               "text":"Bitcoin",
-               "indices":[
-                  9,
-                  17
-               ]
-            }
+            
          ],
          "urls":[
-            
+            {
+               "url":"https:\/\/t.co\/545d9V5PjX",
+               "expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1414470756440805380",
+               "display_url":"twitter.com\/i\/web\/status\/1\u2026",
+               "indices":[
+                  117,
+                  140
+               ]
+            }
          ],
          "user_mentions":[
             
@@ -144,36 +385,236 @@
       },
       "favorited":false,
       "retweeted":false,
+      "possibly_sensitive":false,
       "filter_level":"low",
       "lang":"en"
    },
-   "is_quote_status":false,
+   "quoted_status_permalink":{
+      "url":"https:\/\/t.co\/XEvLonjY5d",
+      "expanded":"https:\/\/twitter.com\/kuapefinance\/status\/1414470756440805380",
+      "display":"twitter.com\/kuapefinance\/s\u2026"
+   },
+   "is_quote_status":true,
+   "extended_tweet":{
+      "full_text":"This is a good project\ud83d\udd25\ud83d\ude80\n\n@AizaQureshi8 @MeherinSheza @laari_meloo @Minsakh48990410 @Laura_Treem11 @beccasun18 \n\n#KUAPE #KUCOIN #KCC #GIVEAWAY #MEME #BITCOIN #KUAPEFINANCE #DEX #IDO",
+      "display_text_range":[
+         0,
+         181
+      ],
+      "entities":{
+         "hashtags":[
+            {
+               "text":"KUAPE",
+               "indices":[
+                  113,
+                  119
+               ]
+            },
+            {
+               "text":"KUCOIN",
+               "indices":[
+                  120,
+                  127
+               ]
+            },
+            {
+               "text":"KCC",
+               "indices":[
+                  128,
+                  132
+               ]
+            },
+            {
+               "text":"GIVEAWAY",
+               "indices":[
+                  133,
+                  142
+               ]
+            },
+            {
+               "text":"MEME",
+               "indices":[
+                  143,
+                  148
+               ]
+            },
+            {
+               "text":"BITCOIN",
+               "indices":[
+                  149,
+                  157
+               ]
+            },
+            {
+               "text":"KUAPEFINANCE",
+               "indices":[
+                  158,
+                  171
+               ]
+            },
+            {
+               "text":"DEX",
+               "indices":[
+                  172,
+                  176
+               ]
+            },
+            {
+               "text":"IDO",
+               "indices":[
+                  177,
+                  181
+               ]
+            }
+         ],
+         "urls":[
+            
+         ],
+         "user_mentions":[
+            {
+               "screen_name":"AizaQureshi8",
+               "name":"Aiza Qureshi",
+               "id":1327614258054619136,
+               "id_str":"1327614258054619136",
+               "indices":[
+                  26,
+                  39
+               ]
+            },
+            {
+               "screen_name":"MeherinSheza",
+               "name":"Sabiha meherin Sheza",
+               "id":1318031817614651395,
+               "id_str":"1318031817614651395",
+               "indices":[
+                  40,
+                  53
+               ]
+            },
+            {
+               "screen_name":"laari_meloo",
+               "name":"Melo\u2728tt novo",
+               "id":1409566598617313284,
+               "id_str":"1409566598617313284",
+               "indices":[
+                  54,
+                  66
+               ]
+            },
+            {
+               "screen_name":"Minsakh48990410",
+               "name":"Minsakhan",
+               "id":1398586177490391042,
+               "id_str":"1398586177490391042",
+               "indices":[
+                  67,
+                  83
+               ]
+            },
+            {
+               "screen_name":"Laura_Treem11",
+               "name":"\ud835\udd70\ud835\udd98\ud835\udd88\ud835\udd94\ud835\udd97\ud835\udd95\ud835\udd8e\ud835\udd86\ud835\udd93\ud835\udd86\u2698",
+               "id":1383809454806691860,
+               "id_str":"1383809454806691860",
+               "indices":[
+                  84,
+                  98
+               ]
+            },
+            {
+               "screen_name":"beccasun18",
+               "name":"branquinha \ud83e\udd8b",
+               "id":1283914346192568322,
+               "id_str":"1283914346192568322",
+               "indices":[
+                  99,
+                  110
+               ]
+            }
+         ],
+         "symbols":[
+            
+         ]
+      }
+   },
    "quote_count":0,
    "reply_count":0,
    "retweet_count":0,
    "favorite_count":0,
    "entities":{
       "hashtags":[
+         
+      ],
+      "urls":[
          {
-            "text":"Bitcoin",
+            "url":"https:\/\/t.co\/SUvFzqimIX",
+            "expanded_url":"https:\/\/twitter.com\/i\/web\/status\/1414865255952314369",
+            "display_url":"twitter.com\/i\/web\/status\/1\u2026",
             "indices":[
-               25,
-               33
+               112,
+               135
             ]
          }
       ],
-      "urls":[
-         
-      ],
       "user_mentions":[
          {
-            "screen_name":"ashwsbreal",
-            "name":"Ash WSB \ud83c\udf65",
-            "id":3185716686,
-            "id_str":"3185716686",
+            "screen_name":"AizaQureshi8",
+            "name":"Aiza Qureshi",
+            "id":1327614258054619136,
+            "id_str":"1327614258054619136",
             "indices":[
-               3,
-               14
+               26,
+               39
+            ]
+         },
+         {
+            "screen_name":"MeherinSheza",
+            "name":"Sabiha meherin Sheza",
+            "id":1318031817614651395,
+            "id_str":"1318031817614651395",
+            "indices":[
+               40,
+               53
+            ]
+         },
+         {
+            "screen_name":"laari_meloo",
+            "name":"Melo\u2728tt novo",
+            "id":1409566598617313284,
+            "id_str":"1409566598617313284",
+            "indices":[
+               54,
+               66
+            ]
+         },
+         {
+            "screen_name":"Minsakh48990410",
+            "name":"Minsakhan",
+            "id":1398586177490391042,
+            "id_str":"1398586177490391042",
+            "indices":[
+               67,
+               83
+            ]
+         },
+         {
+            "screen_name":"Laura_Treem11",
+            "name":"\ud835\udd70\ud835\udd98\ud835\udd88\ud835\udd94\ud835\udd97\ud835\udd95\ud835\udd8e\ud835\udd86\ud835\udd93\ud835\udd86\u2698",
+            "id":1383809454806691860,
+            "id_str":"1383809454806691860",
+            "indices":[
+               84,
+               98
+            ]
+         },
+         {
+            "screen_name":"beccasun18",
+            "name":"branquinha \ud83e\udd8b",
+            "id":1283914346192568322,
+            "id_str":"1283914346192568322",
+            "indices":[
+               99,
+               110
             ]
          }
       ],
@@ -185,5 +626,5 @@
    "retweeted":false,
    "filter_level":"low",
    "lang":"en",
-   "timestamp_ms":"1626089220290"
+   "timestamp_ms":"1626165138601"
 }
