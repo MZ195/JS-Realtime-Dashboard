@@ -81,3 +81,8 @@ Due to time constraints, the project didn't reach it's full potentional, but her
 But as we may add more factors into account to make it reflect a real-world transaction, there may be no practical opportunities to profit from these predicted information, and this particular predictive model will be relatively useless from a trading perspective.
 
 -	It is not a straightforward method to build a model with the predictive power to beat the market.
+
+## Disclaimer
+Nothing herein is financial advice, or even a recommendation to trade real money.<br/>
+Many platforms exist for simulated trading (paper trading) which can be used for building and developing the strategies discussed.<br/>
+Please use common sense.
