@@ -17,8 +17,6 @@ class BTPrice extends Component {
   }
 
   componentDidMount() {
-    console.log(window.location.hostname);
-
     setInterval(async () => {
       var v = new Date();
       if (
